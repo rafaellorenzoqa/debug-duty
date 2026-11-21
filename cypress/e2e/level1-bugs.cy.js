@@ -45,7 +45,7 @@ describe("Level 1: clean version (no bugs)", () => {
   });
 
   it("Bug 1 absent: the submit button is spelled correctly", () => {
-    cy.get("[data-cy=submit-button]").should("have.text", "DELIBERATE FAILURE");
+    cy.get("[data-cy=submit-button]").should("have.text", "Sign Up");
   });
 
   it("Bug 2 absent: an email without @ is rejected", () => {
