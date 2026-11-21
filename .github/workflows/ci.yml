@@ -1,0 +1,70 @@
+# Continuous integration: runs on every push and every pull request.
+# A "workflow" is a list of "jobs"; each job is a list of "steps" run on a fresh
+# virtual machine (the "runner"). If any step fails, the run is marked red.
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# Cancel an older run of the same branch when a newer commit arrives.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: Lint, build and Cypress
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm # caches downloaded npm packages between runs
+
+      # The Cypress program itself is a big download kept outside node_modules.
+      - name: Cache the Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci # exact versions from package-lock.json
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build the app
+        run: npm run build
+
+      # Starts the built app, waits for it to answer, runs Cypress, stops the app.
+      - name: Run Cypress tests
+        run: npm run test:e2e
+
+      # `if: failure()` makes these steps run only when something above failed.
+      - name: Upload Cypress screenshots (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Cypress videos (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore
