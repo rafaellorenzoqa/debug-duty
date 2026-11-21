@@ -1,4 +1,4 @@
-# Continuous integration: runs on every push and every pull request.
+# Continuous integration: runs on pushes to main and on every pull request.
 # A "workflow" is a list of "jobs"; each job is a list of "steps" run on a fresh
 # virtual machine (the "runner"). If any step fails, the run is marked red.
 
