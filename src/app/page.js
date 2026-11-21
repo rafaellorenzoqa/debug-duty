@@ -1,13 +1,27 @@
 import Link from "next/link";
+import styles from "@/components/game/Game.module.css";
 
-// In the App Router, src/app/page.js is the home page ("/").
-// Temporary link so Level 1 can be opened; the start screen replaces this in iteration 3.
-export default function HomePage() {
+// In the App Router, src/app/page.js is the home page ("/"): the start screen.
+export default function StartScreen() {
   return (
-    <main>
+    <main className={styles.start} data-cy="start-screen">
       <h1>Debug Duty</h1>
-      <p>The game arrives in the next iterations.</p>
-      <Link href="/level-1">Open Level 1 (work in progress)</Link>
+      <p>
+        <strong>Mission briefing</strong>
+      </p>
+      <div className={styles.briefing}>
+        <p>
+          QA wants this signup page signed off by five o&apos;clock. Find the bugs.
+        </p>
+        <ul>
+          <li>There are exactly five bugs: two easy, two medium, one hard.</li>
+          <li>Use the Report bug button: pick a category and describe the bug in one line.</li>
+          <li>Correct reports light up a marker and score points. Wrong or repeated reports score nothing.</li>
+        </ul>
+      </div>
+      <Link href="/level-1" className={styles.linkButton} data-cy="start-button">
+        Start
+      </Link>
     </main>
   );
 }

@@ -13,6 +13,7 @@ export const level1 = {
   bugs: [
     {
       id: "visual-button-typo",
+      title: "Misspelled submit button",
       difficulty: "easy", // green
       category: "Visual",
       points: 10,
@@ -20,6 +21,7 @@ export const level1 = {
     },
     {
       id: "validation-email-no-at",
+      title: "Email accepted without an @",
       difficulty: "easy", // green
       category: "Validation",
       points: 10,
@@ -27,6 +29,7 @@ export const level1 = {
     },
     {
       id: "edge-password-special-char",
+      title: "Password rejects a valid special character",
       difficulty: "medium", // orange
       category: "Edge case",
       points: 20,
@@ -34,6 +37,7 @@ export const level1 = {
     },
     {
       id: "logic-confirm-password-mismatch",
+      title: "Confirm password does not have to match",
       difficulty: "medium", // orange
       category: "Logic",
       points: 20,
@@ -41,6 +45,7 @@ export const level1 = {
     },
     {
       id: "behavior-double-submit",
+      title: "Double click creates a duplicate account",
       difficulty: "hard", // red
       category: "Behavior",
       points: 40,

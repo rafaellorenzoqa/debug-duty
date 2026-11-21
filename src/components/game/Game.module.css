@@ -1,0 +1,178 @@
+/* Game panel, markers, report form and results screen. */
+
+.panel {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-bottom: 2px solid #111;
+}
+
+.panelMain,
+.panelSide {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.counter,
+.score {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Markers: green = easy, orange = medium, red = hard */
+.markers {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marker {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border: 2px solid;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.easy {
+  --tag: #2e9e4f;
+}
+.medium {
+  --tag: #e07b00;
+}
+.hard {
+  --tag: #d32f2f;
+}
+
+.marker.dim {
+  color: var(--tag);
+  background: transparent;
+  border-color: var(--tag);
+  border-style: dashed;
+  opacity: 0.45;
+}
+
+.marker.lit {
+  color: #fff;
+  background: var(--tag);
+  border-color: var(--tag);
+}
+
+/* Report form (full width row under the panel bar) */
+.reportForm {
+  flex-basis: 100%;
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #ddd;
+}
+
+.reportForm label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.reportForm select,
+.reportForm input {
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.primaryButton {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.feedback {
+  margin: 0.25rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+.correct {
+  background: #e6f4ea;
+  color: #1e6b34;
+}
+
+.duplicate {
+  background: #fff4d6;
+  color: #7a5200;
+}
+
+.wrong,
+.invalid {
+  background: #fde7e9;
+  color: #9b1c2c;
+}
+
+/* Results screen */
+.results {
+  text-align: center;
+}
+
+.bigScore {
+  font-size: 1.5rem;
+}
+
+.foundList {
+  display: inline-block;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.foundList li {
+  margin: 0.4rem 0;
+}
+
+.resultsActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.linkButton {
+  padding: 0.5rem 1rem;
+  border: 2px solid #111;
+  border-radius: 6px;
+  color: #111;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Start screen */
+.start {
+  text-align: center;
+}
+
+.briefing {
+  margin: 1.5rem auto;
+  padding: 1rem 1.25rem;
+  max-width: 480px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: left;
+}

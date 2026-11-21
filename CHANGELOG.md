@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (game engine)
+- Start screen at `/` with mission briefing and Start button.
+- Persistent game panel on `/level-1`: five difficulty markers (dimmed until found), "N of 5 found" counter, score, Report bug button.
+- Report form (category dropdown and one-line description) with clear feedback for correct, duplicate, wrong and incomplete reports.
+- Bug matching in `src/lib/game.js`: category match plus keyword match, case-insensitive.
+- Results screen with score, bugs found and best score; "Play again" and "Back to start".
+- Best score stored in localStorage (`src/lib/storage.js`).
+- `title` field added to each bug in `level1.js`.
+- README "How to play".
+
 ### Added (level 1)
 - Level 1 "Sole Mate" signup page at `/level-1` with five deliberate bugs (typo on button, email without `@`, `&` rejected in password, confirm password not compared, double click creates two accounts).
 - Hidden clean version at `/level-1?mode=clean` (not linked or mentioned in the player UI).
