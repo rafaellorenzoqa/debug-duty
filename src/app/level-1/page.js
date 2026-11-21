@@ -1,4 +1,6 @@
+import Game from "@/components/game/Game";
 import SignupForm from "@/components/SignupForm";
+import { level1 } from "@/data/levels/level1";
 
 // Route: /level-1
 //
@@ -11,5 +13,11 @@ import SignupForm from "@/components/SignupForm";
 export default async function Level1Page({ searchParams }) {
   const params = await searchParams;
   const isClean = params.mode === "clean";
-  return <SignupForm isClean={isClean} />;
+
+  // <Game> adds the game panel and results screen around the level page.
+  return (
+    <Game level={level1}>
+      <SignupForm isClean={isClean} />
+    </Game>
+  );
 }
