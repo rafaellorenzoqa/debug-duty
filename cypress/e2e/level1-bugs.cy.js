@@ -1,0 +1,78 @@
+// For each of the five bugs: one test proves the bug IS present in the buggy
+// version, and one proves it is ABSENT in the clean version (same steps,
+// inverted assertions). The clean version is the hidden /level-1?mode=clean.
+
+describe("Level 1: buggy version (each bug is present)", () => {
+  beforeEach(() => {
+    cy.visitLevel1("buggy");
+  });
+
+  it("Bug 1 (Visual): the submit button is misspelled", () => {
+    cy.get("[data-cy=submit-button]").should("have.text", "Sing Up");
+  });
+
+  it("Bug 2 (Validation): an email without @ is accepted", () => {
+    cy.fillSignup({ email: "not-an-email" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=email-error]").should("be.empty");
+    cy.get("[data-cy=success-message]").should("be.visible");
+  });
+
+  it("Bug 3 (Edge case): a password with & is rejected", () => {
+    cy.fillSignup({ password: "Pass&word1", confirm: "Pass&word1" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=password-error]").should("have.text", "Password contains invalid characters");
+    cy.get("[data-cy=success-message]").should("not.exist");
+  });
+
+  it("Bug 4 (Logic): a confirm password that does not match is accepted", () => {
+    cy.fillSignup({ confirm: "Different1!" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=confirm-password-error]").should("be.empty");
+    cy.get("[data-cy=success-message]").should("be.visible");
+  });
+
+  it("Bug 5 (Behavior): double clicking submit creates two accounts", () => {
+    cy.fillSignup();
+    cy.get("[data-cy=submit-button]").dblclick();
+    cy.get("[data-cy=accounts-created]").should("have.text", "2");
+  });
+});
+
+describe("Level 1: clean version (no bugs)", () => {
+  beforeEach(() => {
+    cy.visitLevel1("clean");
+  });
+
+  it("Bug 1 absent: the submit button is spelled correctly", () => {
+    cy.get("[data-cy=submit-button]").should("have.text", "Sign Up");
+  });
+
+  it("Bug 2 absent: an email without @ is rejected", () => {
+    cy.fillSignup({ email: "not-an-email" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=email-error]").should("have.text", "Enter a valid email address");
+    cy.get("[data-cy=success-message]").should("not.exist");
+  });
+
+  it("Bug 3 absent: a password with & is accepted", () => {
+    cy.fillSignup({ password: "Pass&word1", confirm: "Pass&word1" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=password-error]").should("be.empty");
+    cy.get("[data-cy=success-message]").should("be.visible");
+  });
+
+  it("Bug 4 absent: a confirm password that does not match is rejected", () => {
+    cy.fillSignup({ confirm: "Different1!" });
+    cy.get("[data-cy=submit-button]").click();
+    cy.get("[data-cy=confirm-password-error]").should("have.text", "Passwords do not match");
+    cy.get("[data-cy=success-message]").should("not.exist");
+  });
+
+  it("Bug 5 absent: double clicking submit creates only one account", () => {
+    cy.fillSignup();
+    cy.get("[data-cy=submit-button]").dblclick();
+    cy.get("[data-cy=success-message]").should("be.visible");
+    cy.get("[data-cy=accounts-created]").should("have.text", "1");
+  });
+});

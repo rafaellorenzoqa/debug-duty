@@ -19,7 +19,14 @@ npm run dev     # http://localhost:3000
 ```
 
 ## Run tests
-_Coming soon (Cypress and k6)._
+```bash
+npm run build       # the e2e tests run against the production build
+npm run test:e2e    # starts the app and runs all Cypress specs headlessly
+npm run cy:open     # interactive Cypress runner (start the app with `npm run dev` first)
+```
+Selectors use `data-cy` attributes only. k6 tests are coming later.
+
+> Windows + VS Code: if Cypress fails with `bad option: --smoke-test`, run `unset ELECTRON_RUN_AS_NODE` (bash) or `Remove-Item Env:ELECTRON_RUN_AS_NODE` (PowerShell) first.
 
 ## Tech stack
 Next.js (App Router, JavaScript), plain CSS, Cypress, k6, GitHub Actions, Vercel.
