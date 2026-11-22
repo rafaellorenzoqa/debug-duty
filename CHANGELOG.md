@@ -5,6 +5,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (docs)
+- Complete README: what the game is, how to play, run locally, run tests, CI, project layout, tech stack, roadmap, known limitations, CI status badge.
+- Architecture decision records in `docs/decisions`: Cypress, no database yet, trunk-based development with a CI gate, clean-mode switch.
+
 ### Added (game engine)
 - Start screen at `/` with mission briefing and Start button.
 - Persistent game panel on `/level-1`: five difficulty markers (dimmed until found), "N of 5 found" counter, score, Report bug button.
