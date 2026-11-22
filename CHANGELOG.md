@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Changed (clean mode in production)
+- The hidden clean version is now blocked in production builds unless `ENABLE_CLEAN_MODE=true` is set on the server (`src/lib/cleanMode.js`). Always available in `npm run dev`.
+- `npm run test:e2e` sets the flag; Vercel does not, so the live site ignores the query parameter.
+- New guard spec `cypress/e2e/clean-mode-blocked.cy.js` and script `test:e2e:guard`; CI runs it with the flag off.
+- Added `cross-env` so the flag works on Windows, macOS and Linux.
+- README and ADR 0004 updated; removed the known limitation.
+
 ### Added (docs)
 - Complete README: what the game is, how to play, run locally, run tests, CI, project layout, tech stack, roadmap, known limitations, CI status badge.
 - Architecture decision records in `docs/decisions`: Cypress, no database yet, trunk-based development with a CI gate, clean-mode switch.

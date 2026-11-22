@@ -32,7 +32,9 @@ npm run dev     # http://localhost:3000
 ## Run tests
 ```bash
 npm run build       # the e2e tests run against the production build
+                    # (`test:e2e` sets ENABLE_CLEAN_MODE=true so tests can reach the clean version)
 npm run test:e2e    # starts the app and runs all Cypress specs headlessly
+npm run test:e2e:guard  # starts the app WITHOUT the clean-mode flag; checks the clean version is blocked
 npm run cy:open     # interactive Cypress runner (start the app with `npm run dev` first)
 npm run lint        # ESLint
 ```
@@ -64,8 +66,7 @@ Next.js (App Router, JavaScript), plain CSS modules, Cypress, GitHub Actions, Ve
 - User accounts and a leaderboard (Supabase)
 - k6 performance tests for signup, once there is a backend
 - A second game mode: fix the flaky Cypress test puzzles
-- A build-time flag to switch the clean version off in production
 
 ## Known limitations
-- Every level has a hidden clean version, used only by the automated tests, switched on with a URL query parameter. It is not shown in the player UI, but it is not blocked in production either, so a curious player could find it. Blocking it needs a flag that is on in CI and off on Vercel. See [ADR 0004](docs/decisions/0004-clean-mode-switch.md).
+- Every level has a hidden clean version, used only by the automated tests. It is switched on with a URL query parameter, and in a production build only when the server has `ENABLE_CLEAN_MODE=true`. CI sets it; Vercel does not, so on the live site the parameter is ignored. A guard test checks this. See [ADR 0004](docs/decisions/0004-clean-mode-switch.md).
 - Scores are per browser and can be edited by the player.
