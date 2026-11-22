@@ -6,6 +6,8 @@ A QA-themed web game. You play a tester. Each level is a small, deliberately bug
 
 It is also a portfolio project for test automation: every bug is covered by an automated Cypress test, CI runs on every pull request, and the design decisions are written down in [docs/decisions](docs/decisions).
 
+**Play it live: https://debug-duty.vercel.app/**
+
 > Status: prototype with one level. Level 1 is a fake sneaker-store signup page ("Sole Mate") with five bugs.
 
 ## What the game is
@@ -46,7 +48,7 @@ npm run lint        # ESLint
 > Windows + VS Code: if Cypress fails with `bad option: --smoke-test`, run `unset ELECTRON_RUN_AS_NODE` (bash) or `Remove-Item Env:ELECTRON_RUN_AS_NODE` (PowerShell) first.
 
 ## Continuous integration
-GitHub Actions runs on every pull request and on pushes to `main`: install, lint, build, then the Cypress suite. When a run fails, Cypress screenshots and videos are attached to the run as artifacts. `main` is protected: the **Lint, build and Cypress** check must pass before merging. See [ADR 0003](docs/decisions/0003-trunk-based-development-and-ci-gate.md).
+Production deploys automatically from `main` on Vercel. GitHub Actions runs on every pull request and on pushes to `main`: install, lint, build, then the Cypress suite. When a run fails, Cypress screenshots and videos are attached to the run as artifacts. `main` is protected: the **Lint, build and Cypress** check must pass before merging. See [ADR 0003](docs/decisions/0003-trunk-based-development-and-ci-gate.md).
 
 ## Project layout
 | Path | What it holds |
