@@ -1,6 +1,7 @@
 import Game from "@/components/game/Game";
 import SignupForm from "@/components/SignupForm";
 import { level1 } from "@/data/levels/level1";
+import { shouldShowCleanVersion } from "@/lib/cleanMode";
 
 // Route: /level-1
 //
@@ -12,7 +13,8 @@ import { level1 } from "@/data/levels/level1";
 // In recent Next.js versions it is a Promise, so we `await` it.
 export default async function Level1Page({ searchParams }) {
   const params = await searchParams;
-  const isClean = params.mode === "clean";
+  // On the live site the flag is off, so the parameter is ignored (see src/lib/cleanMode.js).
+  const isClean = shouldShowCleanVersion(params.mode);
 
   // <Game> adds the game panel and results screen around the level page.
   return (

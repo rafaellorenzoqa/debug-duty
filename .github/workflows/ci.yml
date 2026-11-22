@@ -53,6 +53,10 @@ jobs:
       - name: Run Cypress tests
         run: npm run test:e2e
 
+      # Second run with the flag OFF (like Vercel): the hidden clean version must be unreachable.
+      - name: Run clean-mode guard test (flag off)
+        run: npm run test:e2e:guard
+
       # `if: failure()` makes these steps run only when something above failed.
       - name: Upload Cypress screenshots (on failure)
         if: failure()
