@@ -1,23 +1,20 @@
 // Pure game logic: no React, no browser APIs. Easy to read and easy to unit test.
 
 import { CATEGORY_INFO } from "@/data/categories";
+import { rankBugs } from "@/lib/matching";
 
 // Points for a bug reported under the wrong category: half, rounded down.
 export function halfPoints(bug) {
   return Math.floor(bug.points / 2);
 }
 
-// True when the text contains at least one word from every group in bug.match.
-function describesBug(bug, text) {
-  return bug.match.every((group) => group.some((word) => text.includes(word.toLowerCase())));
-}
-
 // Checks one player report against the level's bug list.
 //
 // Matching rule (kept simple on purpose):
 //   1. A bug is a candidate when the description is somewhat accurate: it must contain
-//      at least one word from EVERY word group in the bug's `match` list
-//      (case-insensitive). "email" alone is not enough; "email accepts no @" is.
+//      at least one word from EVERY word group in the bug's `match` list, as whole words
+//      (see src/lib/matching.js). "email" alone is not enough; "email accepts no @" is.
+//      Candidates are ranked by how many listed words the description contains.
 //   2. If a candidate also has the chosen category, the player earns full points.
 //   3. If the only candidates have a different category, the player found the bug
 //      but mislabelled it: half points and an explanation of the real category.
@@ -33,7 +30,7 @@ function describesBug(bug, text) {
 //   bug, points, headline, pointsLabel, and `sections` ([{ label, text }]).
 // Every status has a plain-text `message` as well.
 export function checkReport(level, foundIds, category, description) {
-  const text = (description || "").trim().toLowerCase();
+  const text = (description || "").trim();
 
   if (!category) {
     return { status: "invalid", message: "Pick a bug category first." };
@@ -42,7 +39,8 @@ export function checkReport(level, foundIds, category, description) {
     return { status: "invalid", message: "Describe the bug in a few words." };
   }
 
-  const candidates = level.bugs.filter((bug) => describesBug(bug, text));
+  // Best match first (see src/lib/matching.js).
+  const candidates = rankBugs(level.bugs, text);
 
   if (candidates.length === 0) {
     return {
@@ -53,10 +51,13 @@ export function checkReport(level, foundIds, category, description) {
   }
 
   // Right category first: if one matches, the report is judged against those bugs only.
-  const sameCategory = candidates.filter((bug) => bug.category === category);
+  const sameCategory = candidates.filter((entry) => entry.bug.category === category);
   const pool = sameCategory.length > 0 ? sameCategory : candidates;
 
-  const newBug = pool.find((bug) => !foundIds.includes(bug.id));
+  // Judge the BEST match only. Among equally good matches, prefer one not found yet.
+  const bestScore = pool[0].score;
+  const best = pool.filter((entry) => entry.score === bestScore).map((entry) => entry.bug);
+  const newBug = best.find((bug) => !foundIds.includes(bug.id));
   if (!newBug) {
     return {
       status: "duplicate",
