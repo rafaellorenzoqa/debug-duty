@@ -13,7 +13,8 @@ It is also a portfolio project for test automation: every bug is covered by an a
 ## What the game is
 - **Level 1, "Sole Mate":** a signup page with five hidden bugs of different difficulty.
 - **Difficulty markers:** five tags at the top left tell you from the start that there are exactly five bugs: two easy (green), two medium (orange), one hard (red). They light up as you find bugs.
-- **Reporting:** you pick a category and describe the bug in one line. The game matches it against a known bug list (category match plus keyword match).
+- **Reporting:** you pick a category and describe the bug in one line. The game matches the description against a known bug list by keyword, then checks the category.
+- **Written rules:** the signup page lists what each field should accept (valid email, password rules with every allowed special character). Test the fields against those rules.
 - **Scores** are stored in your browser (localStorage). There are no accounts yet.
 
 ## How to play
@@ -21,7 +22,7 @@ It is also a portfolio project for test automation: every bug is covered by an a
 2. Check the five tags at the top left. They start dimmed.
 3. Explore the signup page and look for bugs.
 4. Press **Report bug**, choose a category (Visual, Validation, Edge case, Logic, Behavior) and describe the bug in one line.
-5. A correct report lights up the matching tag and scores points (easy 10, medium 20, hard 40). Wrong or duplicate reports score nothing.
+5. A correct report lights up the matching tag and scores points (easy 10, medium 20, hard 40). If you find a real bug but pick the wrong category, you get half points and an explanation of the real category. Wrong or duplicate reports score nothing.
 6. Find all five bugs to reach the results screen. Your best score is saved in your browser.
 
 ## Run locally
@@ -41,7 +42,7 @@ npm run cy:open     # interactive Cypress runner (start the app with `npm run de
 npm run lint        # ESLint
 ```
 - `cypress/e2e/level1-bugs.cy.js`: for each bug, one test proves it is present in the buggy page and one proves it is absent in the clean page.
-- `cypress/e2e/game-flow.cy.js`: start screen, markers and counter, correct / duplicate / wrong reports, results screen.
+- `cypress/e2e/game-flow.cy.js`: start screen, markers and counter, correct / half-points / duplicate / wrong reports, results screen.
 - Selectors use `data-cy` attributes only, never CSS classes.
 - k6 performance tests are planned for when there is a backend to test.
 
@@ -55,7 +56,7 @@ Production deploys automatically from `main` on Vercel. GitHub Actions runs on e
 | --- | --- |
 | `src/app` | Pages (start screen, `/level-1`) |
 | `src/components` | The signup page and the game UI (panel, markers, report form, results) |
-| `src/data/levels` | One file per level: the bug list (id, difficulty, category, keywords, points) |
+| `src/data/levels` | One file per level: the bug list (id, difficulty, category, keywords, points, type explanation) |
 | `src/lib` | Game logic (report matching, score), validation rules, localStorage |
 | `cypress` | End-to-end tests and helpers |
 | `docs/decisions` | Architecture decision records |

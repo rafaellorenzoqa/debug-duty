@@ -114,7 +114,8 @@
   color: #1e6b34;
 }
 
-.duplicate {
+.duplicate,
+.partial {
   background: #fff4d6;
   color: #7a5200;
 }

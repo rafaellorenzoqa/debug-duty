@@ -69,8 +69,52 @@ describe("Reporting bugs", () => {
     cy.get("[data-cy=score]").should("have.text", "0");
   });
 
-  it("the right text under the wrong category is not accepted", () => {
+  it("a real bug under the wrong category gives half points and names the real category", () => {
     cy.reportBug("Logic", "The button has a typo");
+
+    cy.get("[data-cy=report-feedback]")
+      .should("have.attr", "data-status", "partial")
+      .and("contain", "not a Logic bug")
+      .and("contain", "it is a Visual bug")
+      .and("contain", "+5");
+    cy.get("[data-cy=marker-visual-button-typo]").should("have.attr", "data-found", "true");
+    cy.get("[data-cy=bug-counter]").should("have.text", "1 of 5 found");
+    cy.get("[data-cy=score]").should("have.text", "5");
+  });
+
+  it("a half-points bug cannot be reported again, not even under the right category", () => {
+    cy.reportBug("Logic", "The button has a typo");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "partial");
+
+    cy.reportBug("Visual", "The button has a typo");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "duplicate");
+    cy.get("[data-cy=score]").should("have.text", "5");
+  });
+
+  it("every bug pays half points under a wrong category", () => {
+    // Each bug reported under a category that is not its own.
+    const wrongCategory = {
+      "visual-button-typo": "Behavior",
+      "validation-email-no-at": "Visual",
+      "edge-password-special-char": "Validation",
+      "logic-confirm-password-mismatch": "Edge case",
+      "behavior-double-submit": "Logic",
+    };
+    let expected = 0;
+    REPORTS.forEach(({ id, text, points }, index) => {
+      expected += points / 2;
+      cy.reportBug(wrongCategory[id], text);
+      if (index < REPORTS.length - 1) {
+        cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "partial");
+        cy.get("[data-cy=score]").should("have.text", String(expected));
+      }
+    });
+    // The fifth bug finishes the level, so the results screen replaces the panel.
+    cy.get("[data-cy=results-score]").should("have.text", String(expected));
+  });
+
+  it("a category with no matching bug text is still wrong", () => {
+    cy.reportBug("Logic", "The page background is too blue");
 
     cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "wrong");
     cy.get("[data-cy=score]").should("have.text", "0");
@@ -100,6 +144,19 @@ describe("Finishing the level", () => {
     cy.get("[data-cy=results-score]").should("have.text", "100");
     cy.get("[data-cy=results-found]").should("contain", "5 of 5");
     cy.get("[data-cy=results-best]").should("contain", "100");
+  });
+
+  it("the results screen shows half points for bugs reported under the wrong category", () => {
+    cy.visitLevel1();
+    cy.reportBug("Logic", "The button has a typo"); // Visual bug, wrong category: 5 of 10
+    REPORTS.slice(1).forEach(({ category, text }) => cy.reportBug(category, text));
+
+    cy.get("[data-cy=results-score]").should("have.text", "95");
+    cy.get("[data-cy=result-visual-button-typo]")
+      .should("have.attr", "data-partial", "true")
+      .and("contain", "5 pts")
+      .and("contain", "it is a Visual bug");
+    cy.get("[data-cy=result-validation-email-no-at]").should("have.attr", "data-partial", "false");
   });
 
   it("Play again starts a fresh game", () => {

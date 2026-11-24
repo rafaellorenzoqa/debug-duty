@@ -17,24 +17,29 @@ import { saveBestResult } from "@/lib/storage";
 
 export default function Game({ level, children }) {
   const [foundIds, setFoundIds] = useState([]);
+  // Bugs found under the wrong category: they score half points.
+  const [partialIds, setPartialIds] = useState([]);
   const [reportOpen, setReportOpen] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [best, setBest] = useState(null);
 
-  const score = calculateScore(level, foundIds);
+  const score = calculateScore(level, foundIds, partialIds);
   const finished = foundIds.length === level.bugs.length;
 
   function handleReport(category, description) {
     const outcome = checkReport(level, foundIds, category, description);
     setFeedback(outcome);
 
-    if (outcome.status === "correct") {
+    if (outcome.status === "correct" || outcome.status === "partial") {
       const newFoundIds = [...foundIds, outcome.bug.id];
+      const newPartialIds =
+        outcome.status === "partial" ? [...partialIds, outcome.bug.id] : partialIds;
       setFoundIds(newFoundIds);
+      setPartialIds(newPartialIds);
       if (newFoundIds.length === level.bugs.length) {
         setBest(
           saveBestResult(level.id, {
-            score: calculateScore(level, newFoundIds),
+            score: calculateScore(level, newFoundIds, newPartialIds),
             bugsFound: newFoundIds.length,
           }),
         );
@@ -45,6 +50,7 @@ export default function Game({ level, children }) {
 
   function handlePlayAgain() {
     setFoundIds([]);
+    setPartialIds([]);
     setFeedback(null);
     setReportOpen(false);
     setBest(null);
@@ -55,6 +61,7 @@ export default function Game({ level, children }) {
       <ResultsScreen
         level={level}
         score={score}
+        partialIds={partialIds}
         maxPoints={maxScore(level)}
         best={best}
         onPlayAgain={handlePlayAgain}

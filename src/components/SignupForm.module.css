@@ -52,6 +52,32 @@
   font-size: 1rem;
 }
 
+/* Written rules under each field: the "requirements" a tester checks against. */
+.rules {
+  margin: 0.3rem 0 0;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid #bbb;
+  background: #f6f6f6;
+  color: #444;
+  font-size: 0.8rem;
+}
+
+.rules p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.rules ul {
+  margin: 0.15rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.rulesNote {
+  margin: 0.5rem 0 0;
+  color: #444;
+  font-size: 0.8rem;
+}
+
 .error {
   min-height: 1.25rem;
   margin: 0.2rem 0 0;

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import styles from "./Game.module.css";
+import { halfPoints } from "@/lib/game";
 
-export default function ResultsScreen({ level, score, maxPoints, best, onPlayAgain }) {
+export default function ResultsScreen({ level, score, maxPoints, partialIds = [], best, onPlayAgain }) {
   return (
     <main className={styles.results} data-cy="results-screen">
       <h1>Sign-off complete!</h1>
@@ -16,14 +17,18 @@ export default function ResultsScreen({ level, score, maxPoints, best, onPlayAga
       <p data-cy="results-best">Best score on this browser: {best.score}</p>
 
       <ul className={styles.foundList} data-cy="results-list">
-        {level.bugs.map((bug) => (
-          <li key={bug.id}>
-            <span className={`${styles.marker} ${styles[bug.difficulty]} ${styles.lit}`}>
-              {bug.points} pts
-            </span>{" "}
-            {bug.title}
-          </li>
-        ))}
+        {level.bugs.map((bug) => {
+          const partial = partialIds.includes(bug.id);
+          return (
+            <li key={bug.id} data-cy={`result-${bug.id}`} data-partial={partial ? "true" : "false"}>
+              <span className={`${styles.marker} ${styles[bug.difficulty]} ${styles.lit}`}>
+                {partial ? halfPoints(bug) : bug.points} pts
+              </span>{" "}
+              {bug.title}
+              {partial && ` (half points: it is a ${bug.category} bug)`}
+            </li>
+          );
+        })}
       </ul>
 
       <div className={styles.resultsActions}>
