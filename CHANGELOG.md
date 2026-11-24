@@ -5,6 +5,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (field rules and category feedback)
+- The signup page now shows its own requirements, so testers have something to validate against: what a valid email is, the password rules with the full list of allowed special characters (including the `&` that the buggy version rejects), the confirm password rule, and a note that one submission creates one account. Same text in both versions.
+- The tagline now says "Hit Sign Up", so the misspelled button can be compared with it.
+- Reporting a real bug under the wrong category now gives half points (rounded down) and explains the real category: a general definition (`CATEGORY_DEFINITIONS`) plus a bug-specific `typeExplanation` in `level1.js`. The bug counts as found and cannot be reported again.
+- Results screen shows which bugs paid half points.
+- Special characters are now defined once (`PASSWORD_SPECIAL_CHARS`) and used for both the validation and the text on the page, so the two cannot drift apart.
+- New Cypress tests for the rules, every other special character being accepted in the buggy version, and half-points reports.
+
+### Changed (field rules and category feedback)
+- The test "the right text under the wrong category is not accepted" became "gives half points and names the real category".
+
 ### Changed (clean mode in production)
 - The hidden clean version is now blocked in production builds unless `ENABLE_CLEAN_MODE=true` is set on the server (`src/lib/cleanMode.js`). Always available in `npm run dev`.
 - `npm run test:e2e` sets the flag; Vercel does not, so the live site ignores the query parameter.

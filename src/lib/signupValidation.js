@@ -5,6 +5,29 @@
 // - Clean version: all switches are OFF (everything works correctly).
 // Keeping the bugs behind named switches keeps the two versions from drifting apart.
 
+// The special characters the password may contain. The form shows this exact list
+// to the player (it is the "requirement" a tester checks the field against), and the
+// validation below uses the same list, so the two can never disagree by accident.
+export const PASSWORD_SPECIAL_CHARS = "!@#$%^&*()_+-=.,?";
+
+// The written rules shown on the form. In BOTH versions the text is the same: it is the
+// spec. In the buggy version the code does not follow the spec, and that is the bug.
+export const FIELD_RULES = {
+  email: [
+    "Exactly one @, with text before it",
+    "A domain after the @ with a dot in it and text on both sides, like example.com",
+    "No spaces",
+    "Valid: name@example.com",
+  ],
+  password: [
+    "At least 8 characters",
+    "At least 1 letter and 1 number",
+    `Allowed special characters: ${PASSWORD_SPECIAL_CHARS.split("").join(" ")}`,
+    "No spaces and no other characters",
+  ],
+  confirm: ["Must be exactly the same as the password"],
+};
+
 export function getBugFlags(isClean) {
   const bugged = !isClean;
   return {
@@ -29,11 +52,15 @@ export function validatePassword(password, bugs) {
   if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
     return "Password must contain a letter and a number";
   }
-  // Allowed: letters, numbers and common special characters.
-  const allowed = bugs.passwordRejectsAmpersand
-    ? /^[A-Za-z0-9!@#$%^*()_+\-=.,?]+$/ // BUG: "&" is missing from this list
-    : /^[A-Za-z0-9!@#$%^&*()_+\-=.,?]+$/;
-  return allowed.test(password) ? "" : "Password contains invalid characters";
+  // Allowed: letters, numbers and the special characters listed above.
+  // BUG: in the buggy version "&" is left out, although the rules list it.
+  const allowedSpecials = bugs.passwordRejectsAmpersand
+    ? PASSWORD_SPECIAL_CHARS.replace("&", "")
+    : PASSWORD_SPECIAL_CHARS;
+  const allAllowed = [...password].every(
+    (char) => /[A-Za-z0-9]/.test(char) || allowedSpecials.includes(char),
+  );
+  return allAllowed ? "" : "Password contains invalid characters";
 }
 
 export function validateConfirmPassword(password, confirm, bugs) {

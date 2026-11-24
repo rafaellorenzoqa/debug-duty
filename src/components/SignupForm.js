@@ -6,6 +6,7 @@
 import { useRef, useState } from "react";
 import styles from "./SignupForm.module.css";
 import {
+  FIELD_RULES,
   getBugFlags,
   validateConfirmPassword,
   validateEmail,
@@ -15,6 +16,20 @@ import {
 // Fake network delay (ms). The double-submit bug needs a gap between
 // the first click and the account being created.
 const SUBMIT_DELAY = 400;
+
+// The written rules under a field. QAs test the field against this list.
+function Rules({ title, rules, cy }) {
+  return (
+    <div className={styles.rules} data-cy={cy}>
+      <p>{title}</p>
+      <ul>
+        {rules.map((rule) => (
+          <li key={rule}>{rule}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function SignupForm({ isClean = false }) {
   const bugs = getBugFlags(isClean);
@@ -63,7 +78,7 @@ export default function SignupForm({ isClean = false }) {
       <header className={styles.brand}>
         <span className={styles.logo}>👟</span>
         <h1 data-cy="store-name">Sole Mate</h1>
-        <p>Join the club. Get first dibs on new drops.</p>
+        <p data-cy="tagline">Join the club. Hit Sign Up to get first dibs on new drops.</p>
       </header>
 
       <form className={styles.card} onSubmit={handleSubmit} noValidate data-cy="signup-form">
@@ -78,6 +93,7 @@ export default function SignupForm({ isClean = false }) {
           data-cy="email-input"
         />
         <p className={styles.error} data-cy="email-error">{errors.email}</p>
+        <Rules title="Valid email:" rules={FIELD_RULES.email} cy="email-rules" />
 
         <label htmlFor="password">Password</label>
         <input
@@ -88,6 +104,7 @@ export default function SignupForm({ isClean = false }) {
           data-cy="password-input"
         />
         <p className={styles.error} data-cy="password-error">{errors.password}</p>
+        <Rules title="Password rules:" rules={FIELD_RULES.password} cy="password-rules" />
 
         <label htmlFor="confirm">Confirm password</label>
         <input
@@ -98,6 +115,7 @@ export default function SignupForm({ isClean = false }) {
           data-cy="confirm-password-input"
         />
         <p className={styles.error} data-cy="confirm-password-error">{errors.confirm}</p>
+        <Rules title="Confirm password:" rules={FIELD_RULES.confirm} cy="confirm-password-rules" />
 
         <button
           type="submit"
@@ -108,6 +126,10 @@ export default function SignupForm({ isClean = false }) {
           {/* BUG 1: the label is misspelled in the buggy version */}
           {bugs.buttonTypo ? "Sing Up" : "Sign Up"}
         </button>
+
+        <p className={styles.rulesNote} data-cy="submit-rules">
+          One submission creates exactly one account, even if you click more than once.
+        </p>
 
         {success && (
           <p className={styles.success} data-cy="success-message">
