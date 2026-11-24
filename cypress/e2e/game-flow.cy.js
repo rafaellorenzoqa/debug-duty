@@ -4,7 +4,7 @@
 // One valid report per bug (category + a description accurate enough to match the bug).
 const REPORTS = [
   { id: "visual-button-typo", category: "Visual", text: "The button has a typo", points: 10 },
-  { id: "validation-email-no-at", category: "Validation", text: "Email accepted without an @", points: 10 },
+  { id: "validation-email-format", category: "Validation", text: "Email accepts invalid formats like two @ or spaces", points: 10 },
   { id: "edge-password-special-char", category: "Edge case", text: "Password rejects the & special character", points: 20 },
   { id: "logic-confirm-password-mismatch", category: "Logic", text: "Confirm password does not match but is accepted", points: 20 },
   { id: "behavior-double-submit", category: "Behavior", text: "Double click creates a duplicate account", points: 40 },
@@ -49,6 +49,18 @@ describe("Reporting bugs", () => {
     cy.get("[data-cy=score]").should("have.text", String(points));
   });
 
+  it("a correct report explains the type and shows the points in a badge", () => {
+    cy.reportBug("Validation", "Email accepts invalid formats like two @ or spaces");
+
+    cy.get("[data-cy=report-feedback]")
+      .should("have.attr", "data-status", "correct")
+      .and("contain", "Why this is a Validation bug")
+      .and("contain", 'What "Validation" means')
+      .and("contain", "Testing tip")
+      .and("contain", "equivalence partitioning");
+    cy.get("[data-cy=report-points]").should("have.text", "+10 pts");
+  });
+
   it("a duplicate report is rejected and gives no points", () => {
     const { category, text, points } = REPORTS[0];
     cy.reportBug(category, text);
@@ -74,9 +86,12 @@ describe("Reporting bugs", () => {
 
     cy.get("[data-cy=report-feedback]")
       .should("have.attr", "data-status", "partial")
-      .and("contain", "not a Logic bug")
-      .and("contain", "it is a Visual bug")
-      .and("contain", "+5");
+      .and("contain", 'You chose "Logic"')
+      .and("contain", 'The correct type is "Visual"')
+      .and("contain", "Why this is a Visual bug")
+      .and("contain", "How to tell them apart")
+      .and("contain", "Testing tip");
+    cy.get("[data-cy=report-points]").should("have.text", "+5 of 10 pts");
     cy.get("[data-cy=marker-visual-button-typo]").should("have.attr", "data-found", "true");
     cy.get("[data-cy=bug-counter]").should("have.text", "1 of 5 found");
     cy.get("[data-cy=score]").should("have.text", "5");
@@ -95,7 +110,7 @@ describe("Reporting bugs", () => {
     // Each bug reported under a category that is not its own.
     const wrongCategory = {
       "visual-button-typo": "Behavior",
-      "validation-email-no-at": "Visual",
+      "validation-email-format": "Visual",
       "edge-password-special-char": "Validation",
       "logic-confirm-password-mismatch": "Edge case",
       "behavior-double-submit": "Logic",
@@ -151,6 +166,36 @@ describe("Reporting bugs", () => {
   });
 });
 
+describe("Category help in the report form", () => {
+  beforeEach(() => {
+    cy.visitLevel1();
+    cy.get("[data-cy=report-bug-button]").click();
+  });
+
+  it("invites the player to pick a category before one is chosen", () => {
+    cy.get("[data-cy=category-help]").should("contain", "Not sure which type to pick?");
+  });
+
+  it("explains each category as soon as it is selected, before submitting", () => {
+    const expected = {
+      Visual: "looks or reads wrong",
+      Validation: "accepts input that its rules say it must reject",
+      "Edge case": "unusual, extreme or boundary value",
+      Logic: "business rule is missing, ignored or implemented wrongly",
+      Behavior: "how the app reacts to the way you use it",
+    };
+    Object.entries(expected).forEach(([category, text]) => {
+      cy.get("[data-cy=report-category]").select(category);
+      cy.get("[data-cy=category-help]")
+        .should("contain", `${category} bugs`)
+        .and("contain", text)
+        .and("contain", "Ask yourself")
+        .and("contain", "Example in another app")
+        .and("contain", "Tell it apart");
+    });
+  });
+});
+
 describe("Finishing the level", () => {
   it("finding all five bugs shows the results screen with the full score", () => {
     cy.visitLevel1();
@@ -177,7 +222,7 @@ describe("Finishing the level", () => {
       .should("have.attr", "data-partial", "true")
       .and("contain", "5 pts")
       .and("contain", "it is a Visual bug");
-    cy.get("[data-cy=result-validation-email-no-at]").should("have.attr", "data-partial", "false");
+    cy.get("[data-cy=result-validation-email-format]").should("have.attr", "data-partial", "false");
   });
 
   it("Play again starts a fresh game", () => {

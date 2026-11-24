@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (educational feedback)
+- Category help: picking a category in the report form shows what it means, a question to ask yourself, an example from a different app, and how to tell it from similar categories, before the player submits (`CATEGORY_INFO` in `categories.js`).
+- Teaching feedback for every found bug, also when the type is right: why this bug belongs to its category, what the category means, and a reusable testing tip (`typeExplanation` and new `lesson` per bug in `level1.js`). A wrong type adds a side-by-side of the chosen and correct type and how to tell them apart.
+- The result card is clearer: green header for full points, yellow header for the right bug with the wrong type, and the points in a large badge instead of the end of a sentence.
+- The report form is two columns on wide screens; the game bar scrolls internally when the lesson is long.
+
+### Changed (email bug)
+- Bug 2 is now "Email field does not check the format": the buggy field accepts anything (no @, two @, spaces, no domain), not only a missing @. Bug id renamed to `validation-email-format`; code flag renamed to `emailSkipsFormatCheck`.
+- The email rules now state the format (`text@domain.ext`, e.g. a@b.com).
+- Cypress tests try seven malformed emails in the buggy and clean versions, and three valid ones in the clean version.
+- The "no match" message now explains how to describe a bug (what it is about and what goes wrong).
+
 ### Changed (separate identities for the game and each level)
 - Debug Duty (start screen, game bar, report form, results screen) now has its own identity: near-black and caution-tape yellow, with a magnifier logo (`DutyLogo.js`) and a hazard-stripe header. Variables `--duty-*` in `globals.css`.
 - Sole Mate's colours moved from the global styles to the level 1 page wrapper (`SignupForm.module.css`), so each future level can define its own brand without touching the game.

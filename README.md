@@ -21,8 +21,8 @@ It is also a portfolio project for test automation: every bug is covered by an a
 1. Read the mission briefing on the start screen and press **Start**.
 2. Check the five tags at the top left. They start dimmed.
 3. Explore the signup page and look for bugs.
-4. Press **Report bug**, choose a category (Visual, Validation, Edge case, Logic, Behavior) and describe the bug in one line.
-5. A correct report lights up the matching tag and scores points (easy 10, medium 20, hard 40). If you find a real bug but pick the wrong category, you get half points and an explanation of the real category. Wrong or duplicate reports score nothing.
+4. Press **Report bug**, choose a category (Visual, Validation, Edge case, Logic, Behavior) and describe the bug in one line. When you pick a category, its meaning and an example appear before you submit.
+5. A correct report lights up the matching tag and scores points (easy 10, medium 20, hard 40). Every found bug comes with an explanation of its type and a testing tip. If you find a real bug but pick the wrong category, you get half points and a side-by-side of the type you chose and the correct one. Wrong or duplicate reports score nothing.
 6. Find all five bugs to reach the results screen. Your best score is saved in your browser.
 
 ## Run locally

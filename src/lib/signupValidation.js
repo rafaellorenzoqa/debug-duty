@@ -17,7 +17,7 @@ export const FIELD_RULES = {
     "Exactly one @, with text before it",
     "A domain after the @ with a dot in it and text on both sides, like example.com",
     "No spaces",
-    "Valid: name@example.com",
+    "Format: text@domain.ext, for example a@b.com or name@example.com",
   ],
   password: [
     "At least 8 characters",
@@ -32,7 +32,7 @@ export function getBugFlags(isClean) {
   const bugged = !isClean;
   return {
     buttonTypo: bugged, // Bug 1 (Visual): button says "Sing Up"
-    emailAcceptsNoAt: bugged, // Bug 2 (Validation): email without "@" is accepted
+    emailSkipsFormatCheck: bugged, // Bug 2 (Validation): the email format is never checked
     passwordRejectsAmpersand: bugged, // Bug 3 (Edge case): "&" is wrongly rejected
     confirmIgnoresValue: bugged, // Bug 4 (Logic): mismatching confirm password is accepted
     doubleSubmitCreatesTwo: bugged, // Bug 5 (Behavior): double click creates two accounts
@@ -41,7 +41,9 @@ export function getBugFlags(isClean) {
 
 export function validateEmail(email, bugs) {
   if (!email) return "Email is required";
-  if (bugs.emailAcceptsNoAt) return ""; // BUG: any non-empty text passes
+  // BUG: the format is never checked, so any non-empty text passes
+  // (no @, two @, spaces, no domain...).
+  if (bugs.emailSkipsFormatCheck) return "";
   const looksValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   return looksValid ? "" : "Enter a valid email address";
 }
