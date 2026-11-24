@@ -1,3 +1,7 @@
+// Emails that break the written format (text@domain.ext): no @, two @, a space, no domain...
+const INVALID_EMAILS = ["not-an-email", "a@@b.com", "a@b@c.com", "a b@c.com", "a@b", "@b.com", "a@.com"];
+const VALID_EMAILS = ["a@b.com", "name@example.com", "first.last+tag@sub.example.co"];
+
 // For each of the five bugs: one test proves the bug IS present in the buggy
 // version, and one proves it is ABSENT in the clean version (same steps,
 // inverted assertions). The clean version is the hidden /level-1?mode=clean.
@@ -44,10 +48,12 @@ describe("Level 1: buggy version (each bug is present)", () => {
     cy.get("[data-cy=submit-button]").should("have.text", "Sing Up");
   });
 
-  it("Bug 2 (Validation): an email without @ is accepted", () => {
-    cy.fillSignup({ email: "not-an-email" });
-    cy.get("[data-cy=submit-button]").click();
-    cy.get("[data-cy=email-error]").should("be.empty");
+  it("Bug 2 (Validation): emails that break the a@b.com format are accepted", () => {
+    INVALID_EMAILS.forEach((email) => {
+      cy.fillSignup({ email });
+      cy.get("[data-cy=submit-button]").click();
+      cy.get("[data-cy=email-error]").should("be.empty");
+    });
     cy.get("[data-cy=success-message]").should("be.visible");
   });
 
@@ -89,11 +95,21 @@ describe("Level 1: clean version (no bugs)", () => {
     cy.get("[data-cy=submit-button]").should("have.text", "Sign Up");
   });
 
-  it("Bug 2 absent: an email without @ is rejected", () => {
-    cy.fillSignup({ email: "not-an-email" });
-    cy.get("[data-cy=submit-button]").click();
-    cy.get("[data-cy=email-error]").should("have.text", "Enter a valid email address");
-    cy.get("[data-cy=success-message]").should("not.exist");
+  it("Bug 2 absent: every email that breaks the a@b.com format is rejected", () => {
+    INVALID_EMAILS.forEach((email) => {
+      cy.fillSignup({ email });
+      cy.get("[data-cy=submit-button]").click();
+      cy.get("[data-cy=email-error]").should("have.text", "Enter a valid email address");
+      cy.get("[data-cy=success-message]").should("not.exist");
+    });
+  });
+
+  it("Bug 2 absent: emails that follow the format are accepted", () => {
+    VALID_EMAILS.forEach((email) => {
+      cy.fillSignup({ email });
+      cy.get("[data-cy=submit-button]").click();
+      cy.get("[data-cy=email-error]").should("be.empty");
+    });
   });
 
   it("Bug 3 absent: a password with & is accepted", () => {

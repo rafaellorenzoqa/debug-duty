@@ -10,8 +10,11 @@
 // Watch out for words that hide inside others ("sing" is inside "missing").
 // Then the category decides the points:
 //   - category equals `category`  -> full `points`
-//   - any other category          -> half points, plus `typeExplanation` so the
-//                                    player learns why this is the real type.
+//   - any other category          -> half points
+//
+// Teaching content shown after a report (both when the type is right and when it is wrong):
+//   typeExplanation - why THIS bug belongs to its category
+//   lesson          - a testing technique the player can reuse on any page
 
 export const level1 = {
   id: "level-1",
@@ -28,11 +31,13 @@ export const level1 = {
         ["typo", "misspell", "spelling", "spelt", "sing up", "incorrect", "swapped", "wrong letter"],
       ],
       typeExplanation:
-        "A misspelled label breaks nothing: the button still works, it just looks wrong. Bugs in how the page looks or reads are Visual.",
+        "The button reads 'Sing Up' instead of 'Sign Up'. Nothing is broken: clicking it still works, it just reads wrong. A problem with how the page looks or reads, and not with how it behaves, is a Visual bug.",
+      lesson:
+        "Read every label, button and heading slowly, and compare them with the other text on the page (the tagline spells the button label correctly). Typos on a main call to action also hurt trust, and they break automated tests that find the button by its text.",
     },
     {
-      id: "validation-email-no-at",
-      title: "Email accepted without an @",
+      id: "validation-email-format",
+      title: "Email field does not check the format",
       difficulty: "easy", // green
       category: "Validation",
       points: 10,
@@ -40,11 +45,14 @@ export const level1 = {
         ["email", "e-mail", "@", "at sign", "at symbol", "address"],
         [
           "@", "at sign", "at symbol", "accept", "allow", "valid", "without", "missing",
-          "malformed", "format", "no domain", "anything", "any text", "not check", "no check",
+          "malformed", "format", "mask", "pattern", "space", "domain", "anything", "any text",
+          "not check", "no check", "regex",
         ],
       ],
       typeExplanation:
-        "The Email field states what a valid address is, and the form accepts input that breaks that rule. A field letting through input it should reject is Validation.",
+        "The page states what a valid email looks like (text@domain.ext, like a@b.com), but the field accepts input that breaks that format: no @, two @, spaces, no domain. A field that accepts or rejects input against its stated rules is a Validation bug.",
+      lesson:
+        "Do not stop at one bad value. Try one valid value, then several invalid ones that each break a DIFFERENT rule: no @, two @, a space, no domain, no dot in the domain. A field that rejects one kind of bad input can still accept another. This is called equivalence partitioning: group inputs into classes and test one from each.",
     },
     {
       id: "edge-password-special-char",
@@ -61,7 +69,9 @@ export const level1 = {
         ],
       ],
       typeExplanation:
-        "Most special characters work and one listed as allowed does not. It only fails for one unusual value, which is the signature of an Edge case.",
+        "Most listed special characters work and exactly one, the ampersand, does not. The feature works for normal input and breaks only for one unusual value. That pattern, fine almost everywhere and broken at one extreme or rare value, is an Edge case.",
+      lesson:
+        "When the rules give a list of allowed values, treat it as a checklist and try EVERY item, not just a sample. Also test at the limits: 7 characters (too short) and 8 (the minimum). Bugs love rare values and boundaries.",
     },
     {
       id: "logic-confirm-password-mismatch",
@@ -77,7 +87,9 @@ export const level1 = {
         ],
       ],
       typeExplanation:
-        "The field is checked for being filled in, but the actual rule (the two passwords must be equal) is never applied. A missing or wrong rule is Logic.",
+        "The field only checks that something was typed. The real rule, that both passwords must be identical, is never applied. The inputs are fine and the screen looks fine: the rule behind them is missing. A missing or wrong rule is a Logic bug.",
+      lesson:
+        "Whenever the page promises that two things must be equal, test the negative: make them different and check the app stops you. Then try the nearly-equal case: a different capital letter, or a trailing space. A positive test alone (both the same) will never find this bug.",
     },
     {
       id: "behavior-double-submit",
@@ -89,11 +101,13 @@ export const level1 = {
         ["account", "user", "signup", "sign up", "click", "submit", "button"],
         [
           "double", "twice", "duplicate", "two accounts", "2 accounts", "two users",
-          "multiple", "more than one", "several", "extra account", "again",
+          "multiple", "more than one", "several", "extra account", "again ",
         ],
       ],
       typeExplanation:
-        "Each field is fine on its own. The problem only shows up in how the page reacts when you click twice quickly. Problems with timing and repeated actions are Behavior.",
+        "Every field works. The problem only appears in how the page reacts when you click twice quickly. Bugs that depend on timing or on repeated actions, and not on a single value, are Behavior bugs.",
+      lesson:
+        "Actions that create something (an account, an order, a payment) must be tried repeatedly and quickly: double click, press Enter twice, click and refresh. Then check the data (here the 'Accounts created' counter), not just the message on screen: the message can look fine while two records were created.",
     },
   ],
 };
