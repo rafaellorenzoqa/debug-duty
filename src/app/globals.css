@@ -1,17 +1,14 @@
-/* Brand colours for "Sole Mate" (the fake store) and the Debug Duty game around it.
-   Navy + orange: trustworthy and sporty. Change a colour here and the whole site follows. */
+/* Debug Duty: the identity of the GAME itself (start screen, game bar, report form,
+   results). Black and caution-tape yellow: "bug hunting on duty".
+   Each level brings its OWN brand and defines its colours on its own page wrapper
+   (see SignupForm.module.css for Sole Mate), so levels never share the game's look. */
 :root {
-  --navy: #0b1f4b;
-  --navy-deep: #07142f;
-  --blue: #1f5fd1;
-  --blue-soft: #e8f0ff;
-  --orange: #ff7a1a;
-  --orange-dark: #e56500;
-  --ink: #14213d;
-  --muted: #5b6785;
-  --line: #d3dcec;
-  --page: #f2f6fd;
-  --danger: #c62828;
+  --duty-black: #111318;
+  --duty-ink: #1d2129;
+  --duty-yellow: #ffd60a;
+  --duty-yellow-dark: #e6bf00;
+  --duty-yellow-soft: #fff6c2;
+  --duty-muted: #5f6673;
 }
 
 * {
@@ -22,8 +19,8 @@ body {
   margin: 0;
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
-  color: var(--ink);
-  background: var(--page);
+  color: var(--duty-ink);
+  background: #f3f3ee;
 }
 
 main {

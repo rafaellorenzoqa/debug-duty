@@ -5,6 +5,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Changed (separate identities for the game and each level)
+- Debug Duty (start screen, game bar, report form, results screen) now has its own identity: near-black and caution-tape yellow, with a magnifier logo (`DutyLogo.js`) and a hazard-stripe header. Variables `--duty-*` in `globals.css`.
+- Sole Mate's colours moved from the global styles to the level 1 page wrapper (`SignupForm.module.css`), so each future level can define its own brand without touching the game.
+
 ### Added (branding)
 - Visual identity for the fake store: navy and orange palette (CSS variables in `globals.css`), an SVG logo (`Logo.js`), a branded hero header, a card-style signup form and an orange call-to-action button.
 - The game bar is now dark navy with an orange underline and bright difficulty markers, so they are easy to see. Start screen, report form and results screen follow the same palette.

@@ -1,7 +1,20 @@
 /* CSS Modules: class names here are scoped to this component only.
-   Colours come from the brand variables in globals.css. */
+   Sole Mate's brand colours are defined here, on the page wrapper, so they apply to
+   this level only. The game around it (Debug Duty) has its own identity. */
 .page {
+  --navy: #0b1f4b;
+  --navy-deep: #07142f;
+  --blue: #1f5fd1;
+  --orange: #ff7a1a;
+  --orange-dark: #e56500;
+  --ink: #14213d;
+  --muted: #5b6785;
+  --line: #d3dcec;
+  --danger: #c62828;
+
   min-height: 100vh;
+  background: #f2f6fd;
+  color: var(--ink);
 }
 
 /* Hero band: the store's brand header */
