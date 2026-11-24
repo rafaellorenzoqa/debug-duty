@@ -1,7 +1,7 @@
 // Game flow: start screen, reporting bugs, markers, counter, results screen.
 // Cypress clears localStorage between tests, so the best score starts empty each time.
 
-// One valid report per bug (category + description that matches its keywords).
+// One valid report per bug (category + a description accurate enough to match the bug).
 const REPORTS = [
   { id: "visual-button-typo", category: "Visual", text: "The button has a typo", points: 10 },
   { id: "validation-email-no-at", category: "Validation", text: "Email accepted without an @", points: 10 },
@@ -111,6 +111,27 @@ describe("Reporting bugs", () => {
     });
     // The fifth bug finishes the level, so the results screen replaces the panel.
     cy.get("[data-cy=results-score]").should("have.text", String(expected));
+  });
+
+  it("a vague report that only names the area does not match", () => {
+    cy.reportBug("Validation", "email");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "wrong");
+
+    cy.reportBug("Visual", "The email label looks small");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "wrong");
+
+    cy.reportBug("Edge case", "password has a problem");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "wrong");
+
+    cy.get("[data-cy=score]").should("have.text", "0");
+  });
+
+  it("an accurate report in different words still matches", () => {
+    cy.reportBug("Validation", "The email field allows addresses with no domain");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "correct");
+
+    cy.reportBug("Logic", "I can retype a different password in the second box and it is accepted");
+    cy.get("[data-cy=report-feedback]").should("have.attr", "data-status", "correct");
   });
 
   it("a category with no matching bug text is still wrong", () => {

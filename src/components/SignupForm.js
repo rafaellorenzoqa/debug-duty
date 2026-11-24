@@ -5,6 +5,7 @@
 
 import { useRef, useState } from "react";
 import styles from "./SignupForm.module.css";
+import Logo from "./Logo";
 import {
   FIELD_RULES,
   getBugFlags,
@@ -76,8 +77,12 @@ export default function SignupForm({ isClean = false }) {
       data-mode={isClean ? "clean" : "buggy"}
     >
       <header className={styles.brand}>
-        <span className={styles.logo}>👟</span>
-        <h1 data-cy="store-name">Sole Mate</h1>
+        <span className={styles.logo}>
+          <Logo />
+        </span>
+        <h1 data-cy="store-name">
+          Sole <span>Mate</span>
+        </h1>
         <p data-cy="tagline">Join the club. Hit Sign Up to get first dibs on new drops.</p>
       </header>
 

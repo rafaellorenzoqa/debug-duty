@@ -5,6 +5,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Changed (separate identities for the game and each level)
+- Debug Duty (start screen, game bar, report form, results screen) now has its own identity: near-black and caution-tape yellow, with a magnifier logo (`DutyLogo.js`) and a hazard-stripe header. Variables `--duty-*` in `globals.css`.
+- Sole Mate's colours moved from the global styles to the level 1 page wrapper (`SignupForm.module.css`), so each future level can define its own brand without touching the game.
+
+### Added (branding)
+- Visual identity for the fake store: navy and orange palette (CSS variables in `globals.css`), an SVG logo (`Logo.js`), a branded hero header, a card-style signup form and an orange call-to-action button.
+- The game bar is now dark navy with an orange underline and bright difficulty markers, so they are easy to see. Start screen, report form and results screen follow the same palette.
+
+### Changed (branding and matching)
+- Field rules are now small red helper text under each field instead of grey boxes. Error messages stay bigger and bolder.
+- Bug matching is stricter: each bug has `match` word groups and a report must contain a word from every group (what it is about + what is wrong). "email" alone no longer matches; "email accepts no @" does. This also applies to half-points reports. Replaces the old `keywords` list.
+- New Cypress tests for vague reports (rejected) and accurate reports in different words (accepted).
+
 ### Added (field rules and category feedback)
 - The signup page now shows its own requirements, so testers have something to validate against: what a valid email is, the password rules with the full list of allowed special characters (including the `&` that the buggy version rejects), the confirm password rule, and a note that one submission creates one account. Same text in both versions.
 - The tagline now says "Hit Sign Up", so the misspelled button can be compared with it.

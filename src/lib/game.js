@@ -7,11 +7,17 @@ export function halfPoints(bug) {
   return Math.floor(bug.points / 2);
 }
 
+// True when the text contains at least one word from every group in bug.match.
+function describesBug(bug, text) {
+  return bug.match.every((group) => group.some((word) => text.includes(word.toLowerCase())));
+}
+
 // Checks one player report against the level's bug list.
 //
 // Matching rule (kept simple on purpose):
-//   1. A bug is a candidate when the description contains at least one of its
-//      keywords (case-insensitive).
+//   1. A bug is a candidate when the description is somewhat accurate: it must contain
+//      at least one word from EVERY word group in the bug's `match` list
+//      (case-insensitive). "email" alone is not enough; "email accepts no @" is.
 //   2. If a candidate also has the chosen category, the player earns full points.
 //   3. If the only candidates have a different category, the player found the bug
 //      but mislabelled it: half points and an explanation of the real category.
@@ -32,9 +38,7 @@ export function checkReport(level, foundIds, category, description) {
     return { status: "invalid", message: "Describe the bug in a few words." };
   }
 
-  const candidates = level.bugs.filter((bug) =>
-    bug.keywords.some((keyword) => text.includes(keyword.toLowerCase())),
-  );
+  const candidates = level.bugs.filter((bug) => describesBug(bug, text));
 
   if (candidates.length === 0) {
     return {

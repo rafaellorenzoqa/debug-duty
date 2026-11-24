@@ -13,7 +13,7 @@ It is also a portfolio project for test automation: every bug is covered by an a
 ## What the game is
 - **Level 1, "Sole Mate":** a signup page with five hidden bugs of different difficulty.
 - **Difficulty markers:** five tags at the top left tell you from the start that there are exactly five bugs: two easy (green), two medium (orange), one hard (red). They light up as you find bugs.
-- **Reporting:** you pick a category and describe the bug in one line. The game matches the description against a known bug list by keyword, then checks the category.
+- **Reporting:** you pick a category and describe the bug in one line. The game matches the description against a known bug list (it has to say what the bug is about and what is wrong, so one vague word is not enough), then checks the category.
 - **Written rules:** the signup page lists what each field should accept (valid email, password rules with every allowed special character). Test the fields against those rules.
 - **Scores** are stored in your browser (localStorage). There are no accounts yet.
 
@@ -56,7 +56,7 @@ Production deploys automatically from `main` on Vercel. GitHub Actions runs on e
 | --- | --- |
 | `src/app` | Pages (start screen, `/level-1`) |
 | `src/components` | The signup page and the game UI (panel, markers, report form, results) |
-| `src/data/levels` | One file per level: the bug list (id, difficulty, category, keywords, points, type explanation) |
+| `src/data/levels` | One file per level: the bug list (id, difficulty, category, match words, points, type explanation) |
 | `src/lib` | Game logic (report matching, score), validation rules, localStorage |
 | `cypress` | End-to-end tests and helpers |
 | `docs/decisions` | Architecture decision records |

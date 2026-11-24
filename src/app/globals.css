@@ -1,13 +1,26 @@
+/* Debug Duty: the identity of the GAME itself (start screen, game bar, report form,
+   results). Black and caution-tape yellow: "bug hunting on duty".
+   Each level brings its OWN brand and defines its colours on its own page wrapper
+   (see SignupForm.module.css for Sole Mate), so levels never share the game's look. */
+:root {
+  --duty-black: #111318;
+  --duty-ink: #1d2129;
+  --duty-yellow: #ffd60a;
+  --duty-yellow-dark: #e6bf00;
+  --duty-yellow-soft: #fff6c2;
+  --duty-muted: #5f6673;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #f6f6f4;
+  color: var(--duty-ink);
+  background: #f3f3ee;
 }
 
 main {
