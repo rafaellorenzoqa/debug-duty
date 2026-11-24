@@ -46,6 +46,10 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Fast, no browser: checks the report matching against tests/matching/phrases.js.
+      - name: Unit tests (report matching)
+        run: npm run test:unit
+
       - name: Build the app
         run: npm run build
 

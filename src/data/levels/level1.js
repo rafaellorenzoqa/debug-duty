@@ -4,10 +4,16 @@
 // so adding a new level later means adding a file like this one.
 //
 // A report matches a bug when the description is somewhat accurate: `match` is a list
-// of word groups, and the description must contain at least one word from EVERY group
-// (case-insensitive). Typically one group says WHAT it is about (the email field) and
-// another says WHAT IS WRONG (it accepts bad input), so "email" alone is not enough.
-// Watch out for words that hide inside others ("sing" is inside "missing").
+// of word groups, and the description must contain at least one word from EVERY group.
+// Typically one group says WHAT it is about (the email field) and another says WHAT IS
+// WRONG (it accepts bad input), so "email" alone is not enough.
+// How words are compared is explained in src/lib/matching.js: whole words from their first
+// letter ("accept" matches "accepts"), phrases as consecutive words, case and punctuation
+// ignored. So write words in lowercase without apostrophes ("doesnt match"), and prefer
+// specific phrases ("not the same") over broad words ("same") that also appear in praise.
+// The phrase fixture tests/matching/phrases.js is the test for these lists: add the
+// phrase there first, then adjust the words until `npm run test:unit` passes.
+// Several bugs can match one report; the one with the most matched words wins.
 // Then the category decides the points:
 //   - category equals `category`  -> full `points`
 //   - any other category          -> half points
@@ -27,8 +33,10 @@ export const level1 = {
       category: "Visual",
       points: 10,
       match: [
+        // what it is about
         ["button", "sing up", "sign up", "submit", "label", "cta"],
-        ["typo", "misspell", "spelling", "spelt", "sing up", "incorrect", "swapped", "wrong letter"],
+        // what is wrong
+        ["typo", "misspell", "spelling", "spelt", "sing up", "wrong letter", "wrong word", "swapped", "mistake"],
       ],
       typeExplanation:
         "The button reads 'Sing Up' instead of 'Sign Up'. Nothing is broken: clicking it still works, it just reads wrong. A problem with how the page looks or reads, and not with how it behaves, is a Visual bug.",
@@ -42,11 +50,24 @@ export const level1 = {
       category: "Validation",
       points: 10,
       match: [
-        ["email", "e-mail", "@", "at sign", "at symbol", "address"],
+        // what it is about
+        ["email", "e mail", "@", "at sign", "at symbol"],
+        // what the field does wrong (accepts it, or does not check)
         [
-          "@", "at sign", "at symbol", "accept", "allow", "valid", "without", "missing",
-          "malformed", "format", "mask", "pattern", "space", "domain", "anything", "any text",
-          "not check", "no check", "regex",
+          "accept", "allow", "let through", "lets through", "without", "ignor",
+          "not follow", "doesnt follow", "does not follow",
+          "no validation", "not validated", "missing validation", "validation missing",
+          "validation is missing", "doesnt validate", "does not validate",
+          "not check", "no check", "doesnt check", "does not check",
+        ],
+        // what kind of bad input gets through (or that nothing is checked)
+        [
+          "invalid", "not valid", "malformed", "wrong format", "bad format", "any format", "no format",
+          "no at", "no domain", "two @", "2 @", "multiple @", "double @", "@@", "more than one @",
+          "space", "anything", "any text", "random text", "mask", "without",
+          "no validation", "not validated", "missing validation", "validation missing",
+          "validation is missing", "doesnt validate", "does not validate",
+          "not check", "no check", "doesnt check", "does not check",
         ],
       ],
       typeExplanation:
@@ -61,11 +82,15 @@ export const level1 = {
       category: "Edge case",
       points: 20,
       match: [
+        // what it is about
         ["password", "&", "ampersand"],
-        ["special", "symbol", "character", "char", "&", "ampersand"],
+        // which kind of input
+        ["special", "symbol", "character", "&", "ampersand"],
+        // what goes wrong
         [
-          "reject", "invalid", "not accept", "not allow", "doesn't accept", "doesn't allow",
-          "refuse", "fails", "blocked", "denied", "can't", "cannot", "won't", "not work",
+          "reject", "invalid", "not valid", "not accept", "not allow", "doesnt accept", "doesnt allow",
+          "does not accept", "does not allow", "not supported", "refuse", "fails", "blocked", "denied",
+          "cant", "cannot", "wont", "not work",
         ],
       ],
       typeExplanation:
@@ -80,10 +105,16 @@ export const level1 = {
       category: "Logic",
       points: 20,
       match: [
-        ["confirm", "retype", "repeat", "second password"],
+        // what it is about
+        ["confirm", "retype", "repeat", "second password", "two passwords", "both passwords"],
+        // what is wrong. Phrases such as "not the same" are used on purpose: the bare words
+        // "same" and "match" also appear in praise ("the same size", "matches the style").
         [
-          "match", "different", "same", "equal", "compare", "not checked", "not check",
-          "no check", "ignored", "accept", "allow",
+          "mismatch", "not match", "doesnt match", "does not match", "dont match", "do not match",
+          "no match", "not matching", "not compared", "never compared", "isnt compared",
+          "not checked", "not check", "no check", "not the same", "isnt the same", "not equal",
+          "different password", "different value", "different text", "another password",
+          "ignor", "anything", "any value", "any text",
         ],
       ],
       typeExplanation:
@@ -98,11 +129,16 @@ export const level1 = {
       category: "Behavior",
       points: 40,
       match: [
-        ["account", "user", "signup", "sign up", "click", "submit", "button"],
+        // what the player does
+        ["click", "submit", "press", "tap", "sign up", "signup"],
+        // that it is repeated or fast, or that duplicates appear
         [
-          "double", "twice", "duplicate", "two accounts", "2 accounts", "two users",
-          "multiple", "more than one", "several", "extra account", "again ",
+          "double", "twice", "two times", "2 times", "repeated", "rapid", "quick", "fast",
+          "duplicate", "two accounts", "2 accounts", "two users", "multiple accounts",
+          "more than one account", "extra account", "several accounts",
         ],
+        // what gets created
+        ["account", "users", "duplicate", "create", "record", "entry", "entries"],
       ],
       typeExplanation:
         "Every field works. The problem only appears in how the page reacts when you click twice quickly. Bugs that depend on timing or on repeated actions, and not on a single value, are Behavior bugs.",
