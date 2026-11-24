@@ -1,5 +1,6 @@
 /* Game panel, markers, report form and results screen. */
 
+/* The game bar: dark navy so the bug markers stand out against it */
 .panel {
   position: sticky;
   top: 0;
@@ -10,8 +11,10 @@
   justify-content: space-between;
   gap: 0.75rem 1rem;
   padding: 0.75rem 1rem;
-  background: #fff;
-  border-bottom: 2px solid #111;
+  background: var(--navy-deep);
+  color: #fff;
+  border-bottom: 3px solid var(--orange);
+  box-shadow: 0 4px 14px rgba(7, 20, 47, 0.3);
 }
 
 .panelMain,
@@ -28,7 +31,7 @@
   font-weight: 600;
 }
 
-/* Markers: green = easy, orange = medium, red = hard */
+/* Markers: green = easy, amber = medium, red = hard (bright, to read on the dark bar) */
 .markers {
   display: flex;
   gap: 0.4rem;
@@ -39,21 +42,21 @@
 
 .marker {
   display: inline-block;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.7rem;
   border: 2px solid;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .easy {
-  --tag: #2e9e4f;
+  --tag: #3ddc84;
 }
 .medium {
-  --tag: #e07b00;
+  --tag: #ffb020;
 }
 .hard {
-  --tag: #d32f2f;
+  --tag: #ff5a5f;
 }
 
 .marker.dim {
@@ -61,11 +64,10 @@
   background: transparent;
   border-color: var(--tag);
   border-style: dashed;
-  opacity: 0.45;
 }
 
 .marker.lit {
-  color: #fff;
+  color: var(--navy-deep);
   background: var(--tag);
   border-color: var(--tag);
 }
@@ -76,7 +78,7 @@
   display: grid;
   gap: 0.35rem;
   padding-top: 0.75rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .reportForm label {
@@ -87,20 +89,34 @@
 .reportForm select,
 .reportForm input {
   padding: 0.5rem;
-  border: 1px solid #aaa;
+  border: 1.5px solid transparent;
   border-radius: 6px;
   font-size: 1rem;
+  color: var(--ink);
+  background: #fff;
 }
 
+.reportForm select:focus,
+.reportForm input:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+
+/* Orange button with dark text: readable on both the dark bar and white pages */
 .primaryButton {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.1rem;
   border: 0;
-  border-radius: 6px;
-  background: #111;
-  color: #fff;
+  border-radius: 8px;
+  background: var(--orange);
+  color: var(--navy-deep);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
+  transition: background 0.15s;
+}
+
+.primaryButton:hover {
+  background: var(--orange-dark);
 }
 
 .feedback {
@@ -110,8 +126,8 @@
 }
 
 .correct {
-  background: #e6f4ea;
-  color: #1e6b34;
+  background: #e3f6ea;
+  color: #14613a;
 }
 
 .duplicate,
@@ -155,12 +171,32 @@
 }
 
 .linkButton {
-  padding: 0.5rem 1rem;
-  border: 2px solid #111;
-  border-radius: 6px;
-  color: #111;
-  font-weight: 600;
+  padding: 0.5rem 1.1rem;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  color: var(--navy);
+  font-weight: 700;
   text-decoration: none;
+}
+
+.linkButton:hover {
+  background: var(--blue-soft);
+}
+
+/* Main call to action (Start button) */
+.primaryLink {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  border-radius: 8px;
+  background: var(--orange);
+  color: var(--navy-deep);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primaryLink:hover {
+  background: var(--orange-dark);
 }
 
 /* Start screen */
@@ -168,12 +204,29 @@
   text-align: center;
 }
 
+.start h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.start h1 span {
+  color: var(--orange);
+}
+
 .briefing {
   margin: 1.5rem auto;
   padding: 1rem 1.25rem;
   max-width: 480px;
   background: #fff;
-  border: 1px solid #ddd;
+  border-left: 5px solid var(--orange);
   border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(11, 31, 75, 0.1);
   text-align: left;
+}
+
+.results h1 {
+  color: var(--navy);
 }

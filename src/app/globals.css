@@ -1,13 +1,29 @@
+/* Brand colours for "Sole Mate" (the fake store) and the Debug Duty game around it.
+   Navy + orange: trustworthy and sporty. Change a colour here and the whole site follows. */
+:root {
+  --navy: #0b1f4b;
+  --navy-deep: #07142f;
+  --blue: #1f5fd1;
+  --blue-soft: #e8f0ff;
+  --orange: #ff7a1a;
+  --orange-dark: #e56500;
+  --ink: #14213d;
+  --muted: #5b6785;
+  --line: #d3dcec;
+  --page: #f2f6fd;
+  --danger: #c62828;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #f6f6f4;
+  color: var(--ink);
+  background: var(--page);
 }
 
 main {

@@ -5,7 +5,9 @@ import styles from "@/components/game/Game.module.css";
 export default function StartScreen() {
   return (
     <main className={styles.start} data-cy="start-screen">
-      <h1>Debug Duty</h1>
+      <h1>
+        Debug <span>Duty</span>
+      </h1>
       <p>
         <strong>Mission briefing</strong>
       </p>
@@ -19,7 +21,7 @@ export default function StartScreen() {
           <li>Correct reports light up a marker and score points. Wrong or repeated reports score nothing.</li>
         </ul>
       </div>
-      <Link href="/level-1" className={styles.linkButton} data-cy="start-button">
+      <Link href="/level-1" className={styles.primaryLink} data-cy="start-button">
         Start
       </Link>
     </main>
