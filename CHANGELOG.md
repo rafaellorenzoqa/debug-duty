@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Changed (matching accuracy)
+- Report matching moved to `src/lib/matching.js` (no imports, so Node can test it) and made stricter, still plain text matching with no AI:
+  - player text and word lists are normalised the same way (lowercase, curly quotes, apostrophes removed, punctuation to spaces);
+  - words match as whole words from their first letter ("accept" matches "accepted"; "sing up" no longer matches inside "missing upload"); phrases match as consecutive words; `@` and `&` still match anywhere;
+  - when several bugs match, the one with the most matched words wins; the chosen category is still preferred.
+- Word groups in `level1.js` trimmed to words specific to each bug (for example "not the same" instead of "same"; the email and double-click bugs now need three groups).
+- Fixes false positives such as "the confirm password label is nice and the same size".
+
+### Added (matching accuracy)
+- Phrase fixture `tests/matching/phrases.js` (7 should-match and 7 should-not-match phrases per bug, plus phrases that must match nothing) and a fast Node test `npm run test:unit` (no browser). CI runs it before the build.
+- ADR 0005: matching stays text-based, no LLM judge.
+
 ### Added (educational feedback)
 - Category help: picking a category in the report form shows what it means, a question to ask yourself, an example from a different app, and how to tell it from similar categories, before the player submits (`CATEGORY_INFO` in `categories.js`).
 - Teaching feedback for every found bug, also when the type is right: why this bug belongs to its category, what the category means, and a reusable testing tip (`typeExplanation` and new `lesson` per bug in `level1.js`). A wrong type adds a side-by-side of the chosen and correct type and how to tell them apart.

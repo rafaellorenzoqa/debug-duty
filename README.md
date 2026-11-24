@@ -37,11 +37,13 @@ npm run dev     # http://localhost:3000
 npm run build       # the e2e tests run against the production build
                     # (`test:e2e` sets ENABLE_CLEAN_MODE=true so tests can reach the clean version)
 npm run test:e2e    # starts the app and runs all Cypress specs headlessly
+npm run test:unit   # fast Node test of the report matching (no browser)
 npm run test:e2e:guard  # starts the app WITHOUT the clean-mode flag; checks the clean version is blocked
 npm run cy:open     # interactive Cypress runner (start the app with `npm run dev` first)
 npm run lint        # ESLint
 ```
 - `cypress/e2e/level1-bugs.cy.js`: for each bug, one test proves it is present in the buggy page and one proves it is absent in the clean page.
+- `tests/matching/`: phrases that must and must not match each bug, run against the real matching code with Node's built-in test runner. Add a phrase there whenever a report is judged wrongly.
 - `cypress/e2e/game-flow.cy.js`: start screen, markers and counter, correct / half-points / duplicate / wrong reports, results screen.
 - Selectors use `data-cy` attributes only, never CSS classes.
 - k6 performance tests are planned for when there is a backend to test.
