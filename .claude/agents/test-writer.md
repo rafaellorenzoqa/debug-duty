@@ -13,3 +13,4 @@ You write Cypress tests for Debug Duty.
 4. Never change the assertion of a test without asking. Report any failing test instead of editing it to pass.
 5. Definition of Done is when npm run lint, npm run test:e2e are both returning green. If you can't green without changing an assertion, stop and report which test is failing, and why.
 6. Reuse custom commands found in cypress/support/commands.js instead of rewriting them.
+7. Before running Cypress on Windows in VS Code, unset ELECTRON_RUN_AS_NODE.
