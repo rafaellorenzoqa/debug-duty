@@ -5,6 +5,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (test agents)
+- Two project subagents in `.claude/agents/`: `test-writer` (writes and maintains the Cypress tests) and `test-reviewer` (read-only review of the tests against a checklist; runs lint and the Cypress suite itself).
+- Cypress spec `cypress/e2e/level1-banner.cy.js`: checks that the Level 1 banner paints the navy blue `#0b1f4b` (`rgb(11, 31, 75)`, the middle stop of the banner gradient) in the buggy and clean versions. The banner is reached as the parent of `[data-cy=store-name]` for now; a `data-cy="banner"` on the header is planned in a follow-up branch.
+
 ### Changed (matching accuracy)
 - Report matching moved to `src/lib/matching.js` (no imports, so Node can test it) and made stricter, still plain text matching with no AI:
   - player text and word lists are normalised the same way (lowercase, curly quotes, apostrophes removed, punctuation to spaces);
