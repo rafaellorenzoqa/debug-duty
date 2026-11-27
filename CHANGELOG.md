@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Fixed (Level 2 polish)
+- Report matching: duplicate-filling reports that name a flavor followed by "for both" or "in both" now match (for example "i can choose vanilla for both fillings", "i can pick lemon curd in both"). Plain "for both" / "in both" were too broad, so the words are a flavor word plus the phrase. Three should-match and three should-not-match phrases added to the fixture first.
+- American spelling in the text players see: "color" and "flavor" on the 1Up Bakery page, the Blush Pink bug's title and explanation, and the Visual category definition (shown in both levels). Word lists and fixture phrases keep both spellings, so reports in either spelling still match.
+
+### Changed (Level 2 polish)
+- The interaction between Level 2 bugs 4 and 5 is now documented (comment on `changeFillingCount`, ADR 0006) and pinned by three unit tests: Bug 5 keeps what the second filling was charged, so a stale Pistachio Cream leaves $0 and repeated removals add up. No behaviour change.
+
 ### Fixed (Level 1 confirm-password phrasing)
 - Report matching: confirm-password reports that say the passwords are different now match, for example "The account is created even when password and confirm password are different". New words are tied to the password ("password are different", "differs from the password", "passwords are not identical"...). The bare words "different", "differs" and "not identical" stay out, because they also appear in praise ("the confirm button is different"). Four should-match and eight should-not-match phrases added to the fixture first.
 

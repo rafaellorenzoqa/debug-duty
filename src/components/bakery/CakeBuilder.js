@@ -58,7 +58,7 @@ function PriceList() {
         ))}
       </ul>
 
-      <h3>Outside colour</h3>
+      <h3>Outside color</h3>
       <ul>
         {COLORS.map((color) => (
           <li key={color.name}>
@@ -68,7 +68,7 @@ function PriceList() {
       </ul>
 
       <p className={styles.formula}>
-        Total = size + Fondant surcharge (if Fondant) + first filling + second filling (if 2 fillings) + colour
+        Total = size + Fondant surcharge (if Fondant) + first filling + second filling (if 2 fillings) + color
       </p>
     </section>
   );
@@ -135,7 +135,7 @@ export default function CakeBuilder({ isClean = false }) {
                 </label>
               ))}
             </div>
-            <p className={styles.hint}>With 2 fillings, pick two different flavours.</p>
+            <p className={styles.hint}>With 2 fillings, pick two different flavors.</p>
           </fieldset>
 
           <div className={styles.field}>
@@ -174,7 +174,7 @@ export default function CakeBuilder({ isClean = false }) {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="color">Outside colour</label>
+            <label htmlFor="color">Outside color</label>
             <div className={styles.colorRow}>
               <select
                 id="color"

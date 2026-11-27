@@ -17,7 +17,7 @@ export const level2 = {
   bugs: [
     {
       id: "visual-blush-swatch",
-      title: "Blush Pink swatch shows the wrong colour",
+      title: "Blush Pink swatch shows the wrong color",
       difficulty: "easy", // green
       category: "Visual",
       points: 10,
@@ -32,7 +32,7 @@ export const level2 = {
         ],
       ],
       typeExplanation:
-        "When you pick Blush Pink, the little colour square beside the dropdown turns yellow. The price is right and the order is right: only the picture is wrong. A problem with how the page looks, and not with what it does, is a Visual bug.",
+        "When you pick Blush Pink, the little color square beside the dropdown turns yellow. The price is right and the order is right: only the picture is wrong. A problem with how the page looks, and not with what it does, is a Visual bug.",
       lesson:
         "Whenever a page shows the same thing twice, as a word and as a picture (a swatch, an icon, a preview), check that the two agree. Then cycle through ALL the options, not only the default: a page that is right on load can still be wrong for the sixth item in a list.",
     },
@@ -73,6 +73,16 @@ export const level2 = {
           "same filling", "same flavo", "same one", "twice", "duplicate", "two of the same", "identical",
           "both the same", "are the same", "can be the same", "both fillings can be", "both can be",
           "dont have to be different", "doesnt have to be different", "not have to be different",
+          // A flavor named right before "for both" / "in both" ("vanilla for both fillings",
+          // "lemon curd in both"). Plain "for both" or "in both" is too broad: it also matches
+          // praise such as "the filling in both dropdowns looks nice". One word of each flavor
+          // name, so short and full names both work ("lemon in both", "lemon curd in both").
+          "vanilla for both", "vanilla in both", "cream for both", "cream in both",
+          "chocolate for both", "chocolate in both", "ganache for both", "ganache in both",
+          "strawberry for both", "strawberry in both", "jam for both", "jam in both",
+          "lemon for both", "lemon in both", "curd for both", "curd in both",
+          "dulce for both", "dulce in both", "leche for both", "leche in both",
+          "pistachio for both", "pistachio in both",
         ],
       ],
       typeExplanation:

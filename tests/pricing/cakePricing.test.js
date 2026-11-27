@@ -121,6 +121,32 @@ describe("each bug on its own", () => {
   });
 });
 
+// Bug 5 keeps what the second filling was CHARGED. With all buggy flags on, Bug 4 makes
+// Pistachio Cream as the second filling cost $0, so that is what stays behind.
+// Every cake starts from the default ($30 + Vanilla Cream $4 = $34).
+describe("buggy version: Bug 5 keeps what the second filling was charged", () => {
+  it("(a) Lemon Curd second, back to 1 filling: $6 stays ($40.00)", () => {
+    const two = order({ fillingCount: 2, secondFilling: "Lemon Curd" });
+    const one = changeFillingCount(two, 1, BUGGY);
+    assert.equal(formatPrice(calculateTotal(one, BUGGY)), "$40.00"); // 34 + 6
+  });
+
+  it("(b) Pistachio Cream second, back to 1 filling: $0 stays, because Bug 4 charged it $0 ($34.00)", () => {
+    const two = order({ fillingCount: 2, secondFilling: "Pistachio Cream" });
+    assert.equal(formatPrice(calculateTotal(two, BUGGY)), "$34.00"); // charged $0 while chosen
+    const one = changeFillingCount(two, 1, BUGGY);
+    assert.equal(formatPrice(calculateTotal(one, BUGGY)), "$34.00"); // 34 + 0
+  });
+
+  it("(c) Lemon Curd, back to 1, then Chocolate Ganache, back to 1: $11 stays ($45.00)", () => {
+    const firstTwo = order({ fillingCount: 2, secondFilling: "Lemon Curd" });
+    const firstOne = changeFillingCount(firstTwo, 1, BUGGY); // $6 stays
+    const secondTwo = { ...changeFillingCount(firstOne, 2, BUGGY), secondFilling: "Chocolate Ganache" };
+    const secondOne = changeFillingCount(secondTwo, 1, BUGGY); // another $5 stays
+    assert.equal(formatPrice(calculateTotal(secondOne, BUGGY)), "$45.00"); // 34 + 6 + 5
+  });
+});
+
 describe("buggy version: hand-checked totals that the bugs change", () => {
   it("Fondant 25cm Lemon Curd Blush Pink is $74.00 instead of $90.00", () => {
     assert.equal(total({ cakeType: "Fondant", size: "25cm", firstFilling: "Lemon Curd", color: "Blush Pink" }, BUGGY), "$74.00");

@@ -20,3 +20,6 @@ Level 2 (1Up Bakery, a cake builder) joins Level 1 (Sole Mate, a signup page), a
 - A level can be restyled without risk to the game or to other levels, because CSS module class names are scoped to their component.
 - Cypress tests reach the panel through the same `data-cy` attributes in every level, so game-flow commands (`reportBug`) are reused.
 - Each level needs its own design work and its own contrast check (WCAG AA), since there is no shared level theme.
+
+## Known interaction between bugs 4 and 5 (Level 2)
+In the buggy version, Bug 5 (a removed second filling stays in the total) keeps what the second filling was *charged*. Bug 4 charges Pistachio Cream $0 as the second filling, so removing it leaves $0 behind and Bug 5 cannot be seen with that flavor. Repeated removals add up (Lemon Curd then Chocolate Ganache leaves $6 + $5). This is deliberate: making the stale price ignore Bug 4 would make the total go *up* when going back to 1 filling ($34 to $43), a new and confusing symptom. Each flag still only changes its own behaviour, and tests for Bug 5 use flavors other than Pistachio Cream. The unit tests in `tests/pricing/cakePricing.test.js` pin this down.

@@ -151,7 +151,7 @@ const COLORS = [
         .and("contain", "Lavender $3.00")
         .and("contain", "Peach $3.00")
         .and("contain", "Chocolate Brown $5.00")
-        .and("contain", "Total = size + Fondant surcharge (if Fondant) + first filling + second filling (if 2 fillings) + colour");
+        .and("contain", "Total = size + Fondant surcharge (if Fondant) + first filling + second filling (if 2 fillings) + color");
     });
   });
 });
