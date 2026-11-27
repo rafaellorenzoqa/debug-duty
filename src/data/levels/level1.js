@@ -21,10 +21,20 @@
 // Teaching content shown after a report (both when the type is right and when it is wrong):
 //   typeExplanation - why THIS bug belongs to its category
 //   lesson          - a testing technique the player can reuse on any page
+//
+// Navigation (read by the start screen and the results screen):
+//   path    - the level's URL
+//   name    - the product's name, shown on level cards and the Next level button
+//   summary - one line describing the product
+//   next    - the URL of the next level; leave it out on the last level
 
 export const level1 = {
   id: "level-1",
   title: "Sole Mate signup",
+  path: "/level-1",
+  name: "Sole Mate",
+  summary: "A sneaker store's signup page.",
+  next: "/level-2",
   bugs: [
     {
       id: "visual-button-typo",

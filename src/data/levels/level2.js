@@ -10,6 +10,10 @@
 export const level2 = {
   id: "level-2",
   title: "1Up Bakery cake builder",
+  path: "/level-2",
+  name: "1Up Bakery",
+  summary: "An online cake builder with a live price.",
+  // No `next` yet: this is the last level, so the results screen shows no Next level button.
   bugs: [
     {
       id: "visual-blush-swatch",
