@@ -1,8 +1,11 @@
 import Link from "next/link";
 import styles from "./Game.module.css";
 import { halfPoints } from "@/lib/game";
+import { findLevelByPath } from "@/data/levels";
 
 export default function ResultsScreen({ level, score, maxPoints, partialIds = [], best, onPlayAgain }) {
+  const nextLevel = level.next ? findLevelByPath(level.next) : undefined;
+
   return (
     <div className={styles.startPage}>
       <div className={styles.stripe} />
@@ -34,7 +37,18 @@ export default function ResultsScreen({ level, score, maxPoints, partialIds = []
         </ul>
 
         <div className={styles.resultsActions}>
-          <button type="button" className={styles.primaryButton} onClick={onPlayAgain} data-cy="play-again">
+          {/* Only levels with a `next` route get this button; the last level does not. */}
+          {nextLevel && (
+            <Link href={nextLevel.path} className={styles.primaryLink} data-cy="next-level">
+              Next level: {nextLevel.name}
+            </Link>
+          )}
+          <button
+            type="button"
+            className={nextLevel ? styles.linkButton : styles.primaryButton}
+            onClick={onPlayAgain}
+            data-cy="play-again"
+          >
             Play again
           </button>
           <Link href="/" className={styles.linkButton} data-cy="back-to-start">

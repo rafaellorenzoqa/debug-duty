@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (level navigation)
+- Start screen: a "More levels" card for every level after the first (`data-cy="start-level-2"` for 1Up Bakery), with its summary and difficulty mix. The briefing and the Start button are unchanged. All levels are open, nothing is locked.
+- Results screen: a **Next level: 1Up Bakery** button (`data-cy="next-level"`) when the finished level has a next one. Play again and Back to start stay; when Next level is shown, Play again becomes an outlined button so there is one main action.
+- Level data: `path`, `name`, `summary`, and `next` (`level1.next = "/level-2"`; Level 2 has none yet). Registry helpers `findLevelByPath` and `difficultyMix` in `src/data/levels/index.js`.
+- README: two levels, how to move between them, and how to add a level.
+
 ### Added (Level 2: 1Up Bakery)
 - New level at `/level-2`: **1Up Bakery**, a cake builder with five hidden bugs (1 easy, 3 medium, 1 hard; 100 points; categories Visual, Logic, Logic, Edge case, Behavior). Same game panel as Level 1, its own look: light blue and green, rounded, form on the left and a cake summary with the live total on the right (stacked on phones), and an original logo (a cake with a green 1UP badge).
 - `src/data/bakeryMenu.js`: every price in one file. The price list card on the page and every dropdown's options are generated from it.

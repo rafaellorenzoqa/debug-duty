@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "@/components/game/Game.module.css";
 import DutyLogo from "@/components/game/DutyLogo";
+import { LEVELS, difficultyMix } from "@/data/levels";
 
 // In the App Router, src/app/page.js is the home page ("/"): the start screen.
 export default function StartScreen() {
@@ -29,6 +30,28 @@ export default function StartScreen() {
         <Link href="/level-1" className={styles.primaryLink} data-cy="start-button">
           Start
         </Link>
+
+        {/* Every level after the first, read from the level registry. All levels are open. */}
+        <section className={styles.levelCards} aria-labelledby="more-levels-title">
+          <h2 id="more-levels-title" className={styles.briefingTitle}>
+            More levels
+          </h2>
+          <ul>
+            {LEVELS.slice(1).map((level, index) => (
+              <li key={level.id}>
+                <Link href={level.path} className={styles.levelCard} data-cy={`start-${level.id}`}>
+                  <strong>
+                    Level {index + 2}: {level.name}
+                  </strong>
+                  <span>{level.summary}</span>
+                  <span>
+                    {level.bugs.length} bugs: {difficultyMix(level)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </div>
   );
