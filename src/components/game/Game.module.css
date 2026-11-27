@@ -269,6 +269,7 @@
 
 .resultsActions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
   align-items: center;
@@ -278,9 +279,12 @@
   padding: 0.5rem 1.1rem;
   border: 2px solid var(--duty-black);
   border-radius: 8px;
+  background: transparent; /* also used on a <button> (Play again) */
   color: var(--duty-black);
+  font: inherit;
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .linkButton:hover {
@@ -384,4 +388,47 @@
 
 .results .linkButton:hover {
   background: rgba(255, 214, 10, 0.15);
+}
+
+/* Level cards under the Start button: one per level after the first */
+.levelCards ul {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 480px;
+  margin: 0.75rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.levelCard {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.9rem 1.1rem;
+  border: 2px solid var(--duty-yellow);
+  border-radius: 10px;
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+}
+
+.levelCard strong {
+  color: var(--duty-yellow);
+  font-size: 1.05rem;
+}
+
+.levelCard span {
+  color: #d6dae3;
+  font-size: 0.9rem;
+}
+
+.levelCard:hover,
+.levelCard:focus-visible {
+  background: rgba(255, 214, 10, 0.12);
+}
+
+.levelCard:focus-visible,
+.primaryLink:focus-visible,
+.linkButton:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
 }
