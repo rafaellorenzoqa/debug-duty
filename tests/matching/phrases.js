@@ -180,6 +180,7 @@ export const phrases = {
       "i can choose vanilla for both fillings",
       "the same filling can go in both dropdowns",
       "i can pick lemon curd in both",
+      "i picked lemon curd for both dropdowns",
     ],
     shouldNotMatch: [
       "the second dropdown is disabled with one filling",
@@ -192,6 +193,10 @@ export const phrases = {
       "the filling in both dropdowns looks nice",
       "both fillings are listed in the price list",
       "the price is shown for both fillings",
+      // a flavor before "for both" is not enough: praise about prices says it too
+      "vanilla cream for both sizes costs $4",
+      "lemon curd for both cake types costs $6",
+      "pistachio cream costs $9 for both cake types",
     ],
   },
 
