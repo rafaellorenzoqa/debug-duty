@@ -1,7 +1,9 @@
 // Pure game logic: no React, no browser APIs. Easy to read and easy to unit test.
+// Relative imports with .js on purpose (not the "@/" shortcut): Node's test runner
+// reads this file too (tests/game/game.test.js), and only Next.js understands "@/".
 
-import { CATEGORY_INFO } from "@/data/categories";
-import { rankBugs } from "@/lib/matching";
+import { CATEGORY_INFO } from "../data/categories.js";
+import { rankBugs } from "./matching.js";
 
 // Points for a bug reported under the wrong category: half, rounded down.
 export function halfPoints(bug) {

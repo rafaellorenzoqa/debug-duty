@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (half points rounding test)
+- Unit test `tests/game/game.test.js`: half points are rounded down (15 -> 7, 1 -> 0), in `halfPoints`, `checkReport` and `calculateScore`, using a made-up level with odd points (every real bug has even points, so the rounding was not tested anywhere). `npm run test:unit` runs it.
+
+### Changed (half points rounding test)
+- `src/lib/game.js` imports with relative paths instead of the `@/` alias, so Node's test runner can load it. No behaviour change.
+
 ### Added (Level 2 Cypress tests)
 - Written by the `test-writer` agent and reviewed twice by the `test-reviewer` agent.
 - `cypress/e2e/level2-bugs.cy.js`: a present (buggy) and absent (clean) test for each of the five Level 2 bugs.
