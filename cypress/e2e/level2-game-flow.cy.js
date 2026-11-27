@@ -95,8 +95,8 @@ describe("Level 2: reporting bugs", () => {
   it("every bug pays half points under a wrong category", () => {
     // Each bug reported under a category that is not its own.
     // Half points: 5, 10, 10, 10, 15 (total 50). Every bug in both levels has even
-    // points, so no Cypress test can show the rounding down; it is not covered by
-    // any test yet (noted as a follow-up in the PR).
+    // points, so no Cypress test can show the rounding down. It is covered by the
+    // unit test tests/game/game.test.js, which uses made-up bugs with odd points.
     const wrongCategory = {
       "visual-blush-swatch": "Behavior",
       "logic-fondant-25cm": "Visual",

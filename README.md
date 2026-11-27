@@ -39,7 +39,7 @@ npm run dev     # http://localhost:3000
 npm run build       # the e2e tests run against the production build
                     # (`test:e2e` sets ENABLE_CLEAN_MODE=true so tests can reach the clean version)
 npm run test:e2e    # starts the app and runs all Cypress specs headlessly
-npm run test:unit   # fast Node tests: report matching and Level 2 pricing (no browser)
+npm run test:unit   # fast Node tests: report matching, Level 2 pricing, scoring (no browser)
 npm run test:e2e:guard  # starts the app WITHOUT the clean-mode flag; checks the clean version is blocked
 npm run cy:open     # interactive Cypress runner (start the app with `npm run dev` first)
 npm run lint        # ESLint
@@ -49,6 +49,7 @@ npm run lint        # ESLint
 - `cypress/e2e/level2-game-flow.cy.js`: reporting Level 2's bugs through the game panel, its results screen, and the links between levels.
 - `tests/matching/`: phrases that must and must not match each bug of every level, run against the real matching code with Node's built-in test runner. Add a phrase there whenever a report is judged wrongly.
 - `tests/pricing/`: Level 2's hand-checked cake totals and each bug on its own, against the real pricing code.
+- `tests/game/`: scoring rules, including half points rounded down for a wrong category (with made-up odd-point bugs, since every real bug has even points).
 - `cypress/e2e/game-flow.cy.js`: start screen, markers and counter, correct / half-points / duplicate / wrong reports, results screen.
 - Selectors use `data-cy` attributes only, never CSS classes.
 - k6 performance tests are planned for when there is a backend to test.

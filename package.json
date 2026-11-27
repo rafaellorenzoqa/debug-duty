@@ -12,7 +12,7 @@
     "cy:run": "cypress run",
     "test:e2e": "cross-env ENABLE_CLEAN_MODE=true start-server-and-test start http://localhost:3000 cy:run",
     "test:e2e:guard": "start-server-and-test start http://localhost:3000 \"cypress run --spec cypress/e2e/clean-mode-blocked.cy.js --expose EXPECT_CLEAN_MODE_BLOCKED=true\"",
-    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/matching/matching.test.js tests/pricing/cakePricing.test.js"
+    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/matching/matching.test.js tests/pricing/cakePricing.test.js tests/game/game.test.js"
   },
   "engines": {
     "node": ">=20"
