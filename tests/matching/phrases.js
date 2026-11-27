@@ -164,6 +164,9 @@ export const phrases = {
       "duplicate filling is allowed and charged twice",
       "choosing the same flavour twice shows no error",
       "the two fillings dont have to be different",
+      "i can choose vanilla for both fillings",
+      "the same filling can go in both dropdowns",
+      "i can pick lemon curd in both",
     ],
     shouldNotMatch: [
       "the second dropdown is disabled with one filling",
@@ -173,6 +176,9 @@ export const phrases = {
       "vanilla cream is the default filling",
       "the filling radio buttons work",
       "chocolate ganache filling sounds great",
+      "the filling in both dropdowns looks nice",
+      "both fillings are listed in the price list",
+      "the price is shown for both fillings",
     ],
   },
 

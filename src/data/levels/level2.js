@@ -73,6 +73,16 @@ export const level2 = {
           "same filling", "same flavo", "same one", "twice", "duplicate", "two of the same", "identical",
           "both the same", "are the same", "can be the same", "both fillings can be", "both can be",
           "dont have to be different", "doesnt have to be different", "not have to be different",
+          // A flavor named right before "for both" / "in both" ("vanilla for both fillings",
+          // "lemon curd in both"). Plain "for both" or "in both" is too broad: it also matches
+          // praise such as "the filling in both dropdowns looks nice". One word of each flavor
+          // name, so short and full names both work ("lemon in both", "lemon curd in both").
+          "vanilla for both", "vanilla in both", "cream for both", "cream in both",
+          "chocolate for both", "chocolate in both", "ganache for both", "ganache in both",
+          "strawberry for both", "strawberry in both", "jam for both", "jam in both",
+          "lemon for both", "lemon in both", "curd for both", "curd in both",
+          "dulce for both", "dulce in both", "leche for both", "leche in both",
+          "pistachio for both", "pistachio in both",
         ],
       ],
       typeExplanation:
