@@ -14,4 +14,12 @@ describeWhenGuarding("Clean mode is blocked in production", () => {
     cy.get("[data-cy=signup-page]").should("have.attr", "data-mode", "buggy");
     cy.get("[data-cy=submit-button]").should("have.text", "Sing Up");
   });
+
+  it("ignores the clean query parameter on Level 2 and serves the buggy bakery", () => {
+    cy.visit("/level-2?mode=clean");
+    cy.get("[data-cy=bakery-page]").should("have.attr", "data-mode", "buggy");
+    // Bug 1 is visible: the Blush Pink swatch is yellow (Butter Yellow's colour).
+    cy.get("[data-cy=color-select]").select("Blush Pink");
+    cy.get("[data-cy=color-swatch]").should("have.css", "background-color", "rgb(255, 230, 128)");
+  });
 });
