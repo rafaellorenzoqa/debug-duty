@@ -2,63 +2,68 @@
 // Runs with Node's built-in test runner:  npm run test:unit
 //
 // It feeds every phrase in phrases.js to the REAL matching function (src/lib/matching.js)
-// and the REAL bug list (src/data/levels/level1.js).
+// and the REAL bug lists of every level (src/data/levels/index.js). A new level added to
+// the registry is checked automatically, and fails until its phrases are in the fixture.
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 
 import { normalize, rankBugs } from "../../src/lib/matching.js";
-import { level1 } from "../../src/data/levels/level1.js";
+import { LEVELS } from "../../src/data/levels/index.js";
 import { matchNothing, phrases, ranking } from "./phrases.js";
 
-const ids = (text) => rankBugs(level1.bugs, text).map((entry) => entry.bug.id);
+// A report is only ever matched against the bugs of the level being played.
+for (const level of LEVELS) {
+  const ids = (text) => rankBugs(level.bugs, text).map((entry) => entry.bug.id);
 
-describe("every bug in the level has phrases in the fixture", () => {
-  for (const bug of level1.bugs) {
-    it(bug.id, () => {
-      assert.ok(phrases[bug.id], "no phrases for this bug");
-      assert.ok(phrases[bug.id].shouldMatch.length >= 5, "needs at least 5 shouldMatch phrases");
-      assert.ok(phrases[bug.id].shouldNotMatch.length >= 5, "needs at least 5 shouldNotMatch phrases");
-    });
-  }
-});
-
-for (const bug of level1.bugs) {
-  describe(`${bug.id}: should match`, () => {
-    for (const text of phrases[bug.id].shouldMatch) {
-      it(`"${text}"`, () => {
-        const found = ids(text);
-        assert.equal(found[0], bug.id, `best match was ${found[0]} (all matches: ${found.join(", ") || "none"})`);
+  describe(`${level.id}: every bug in the level has phrases in the fixture`, () => {
+    for (const bug of level.bugs) {
+      it(bug.id, () => {
+        assert.ok(phrases[bug.id], "no phrases for this bug");
+        assert.ok(phrases[bug.id].shouldMatch.length >= 5, "needs at least 5 shouldMatch phrases");
+        assert.ok(phrases[bug.id].shouldNotMatch.length >= 5, "needs at least 5 shouldNotMatch phrases");
       });
     }
   });
 
-  describe(`${bug.id}: should NOT match`, () => {
-    for (const text of phrases[bug.id].shouldNotMatch) {
+  for (const bug of level.bugs) {
+    describe(`${bug.id}: should match`, () => {
+      for (const text of phrases[bug.id]?.shouldMatch ?? []) {
+        it(`"${text}"`, () => {
+          const found = ids(text);
+          assert.equal(found[0], bug.id, `best match was ${found[0]} (all matches: ${found.join(", ") || "none"})`);
+        });
+      }
+    });
+
+    describe(`${bug.id}: should NOT match`, () => {
+      for (const text of phrases[bug.id]?.shouldNotMatch ?? []) {
+        it(`"${text}"`, () => {
+          assert.ok(!ids(text).includes(bug.id), `matched ${bug.id}`);
+        });
+      }
+    });
+  }
+
+  describe(`${level.id}: phrases that describe no bug match nothing`, () => {
+    it("has phrases in the fixture", () => assert.ok(matchNothing[level.id]?.length > 0));
+    for (const text of matchNothing[level.id] ?? []) {
       it(`"${text}"`, () => {
-        assert.ok(!ids(text).includes(bug.id), `matched ${bug.id}`);
+        assert.deepEqual(ids(text), []);
+      });
+    }
+  });
+
+  describe(`${level.id}: when more than one bug matches, the one with the most matched words wins`, () => {
+    for (const { text, winner, alsoMatches } of ranking[level.id] ?? []) {
+      it(`"${text}"`, () => {
+        const found = ids(text);
+        assert.equal(found[0], winner);
+        for (const id of alsoMatches) assert.ok(found.includes(id), `${id} should also match`);
       });
     }
   });
 }
-
-describe("phrases that describe no bug match nothing", () => {
-  for (const text of matchNothing) {
-    it(`"${text}"`, () => {
-      assert.deepEqual(ids(text), []);
-    });
-  }
-});
-
-describe("when more than one bug matches, the one with the most matched words wins", () => {
-  for (const { text, winner, alsoMatches } of ranking) {
-    it(`"${text}"`, () => {
-      const found = ids(text);
-      assert.equal(found[0], winner);
-      for (const id of alsoMatches) assert.ok(found.includes(id), `${id} should also match`);
-    });
-  }
-});
 
 describe("normalize", () => {
   const cases = [

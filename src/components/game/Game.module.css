@@ -37,6 +37,9 @@
 /* Markers: green = easy, amber = medium, red = hard (bright, to read on the dark bar) */
 .markers {
   display: flex;
+  /* On narrow screens the markers wrap onto a second line instead of being cut off
+     (the panel scrolls vertically for long lessons, which also makes it clip sideways). */
+  flex-wrap: wrap;
   gap: 0.4rem;
   margin: 0;
   padding: 0;

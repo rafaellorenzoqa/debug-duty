@@ -1,0 +1,288 @@
+/* 1Up Bakery: Level 2's own identity. Light blue and green, friendly and rounded.
+   Colours are defined on the page wrapper, so they apply to this level only; the
+   Debug Duty game panel above keeps its own black and yellow look (see ADR 0006).
+   Text colour pairs are chosen to pass WCAG AA contrast (4.5:1 for normal text). */
+.page {
+  --sky: #eaf6fd; /* page background */
+  --blue: #3b9ad9; /* decoration, borders, focus ring (not used for text) */
+  --blue-dark: #1b6197; /* blue text on white or sky */
+  --ink: #17405c; /* main text */
+  --muted: #3e5f75; /* secondary text */
+  --green: #1f7a4d;
+  --green-light: #ddf3e4;
+  --error: #b3261e;
+  --line: #bfdff3;
+
+  min-height: 100vh;
+  padding-bottom: 2.5rem;
+  color: var(--ink);
+  background-color: var(--sky);
+  /* soft polka dots, like sprinkles */
+  background-image: radial-gradient(rgba(59, 154, 217, 0.12) 2px, transparent 2px);
+  background-size: 28px 28px;
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", "Varela Round", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 1.1rem;
+  background: #fff;
+  border-radius: 0 0 28px 28px;
+  border-bottom: 5px solid var(--green);
+  box-shadow: 0 6px 18px rgba(23, 64, 92, 0.1);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.header h1 span {
+  color: var(--green);
+}
+
+.header p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+
+/* ---- Two columns: form left, summary right (stacked on phones) ---- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 1000px;
+  margin: 1.5rem auto 0;
+  padding: 0 1rem;
+}
+
+@media (min-width: 760px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+
+  .side {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+.builder,
+.summary,
+.priceList {
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  padding: 1.4rem;
+}
+
+.builder h2,
+.summary h2,
+.priceList h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1.35rem;
+  color: var(--blue-dark);
+}
+
+/* ---- Form fields ---- */
+.field {
+  margin-top: 1rem;
+}
+
+.field label,
+.fillingCount legend {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+}
+
+.field select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--sky);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.field select:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.field select:disabled {
+  background: #eef2f5;
+  color: #5a6b78;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+.field select[aria-invalid="true"] {
+  border-color: var(--error);
+}
+
+/* ---- Filling count: radio buttons styled as pill buttons ---- */
+.fillingCount {
+  margin: 1rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pill {
+  position: relative;
+  cursor: pointer;
+}
+
+/* The real radio stays in the page (keyboard and screen readers use it) but is invisible;
+   the span next to it is what you see. */
+.pill input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.pill span {
+  display: inline-block;
+  padding: 0.55rem 1.2rem;
+  border: 2px solid var(--blue);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.pill input:checked + span {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.pill input:focus-visible + span {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.error {
+  min-height: 1.2em;
+  margin: 0.3rem 0 0;
+  color: var(--error);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ---- Colour row with swatch ---- */
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.swatch {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+}
+
+/* ---- Summary and total ---- */
+.side {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.summary dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.9rem;
+  margin: 0;
+}
+
+.summary dt {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 1.1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  background: var(--green-light);
+  color: var(--green);
+  font-weight: 800;
+}
+
+.total output {
+  font-size: 1.9rem;
+}
+
+/* Text for screen readers only (visually hidden). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Price list ---- */
+.priceList h3 {
+  margin: 0.9rem 0 0.3rem;
+  font-size: 0.95rem;
+  color: var(--green);
+}
+
+.priceList ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.priceList li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.15rem 0;
+  border-bottom: 1px dotted var(--line);
+  font-size: 0.92rem;
+}
+
+.formula {
+  margin: 0.9rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}

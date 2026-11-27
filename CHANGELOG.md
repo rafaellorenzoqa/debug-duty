@@ -5,6 +5,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (Level 2: 1Up Bakery)
+- New level at `/level-2`: **1Up Bakery**, a cake builder with five hidden bugs (1 easy, 3 medium, 1 hard; 100 points; categories Visual, Logic, Logic, Edge case, Behavior). Same game panel as Level 1, its own look: light blue and green, rounded, form on the left and a cake summary with the live total on the right (stacked on phones), and an original logo (a cake with a green 1UP badge).
+- `src/data/bakeryMenu.js`: every price in one file. The price list card on the page and every dropdown's options are generated from it.
+- `src/lib/cakePricing.js`: pure pricing and rule functions with one named flag per bug (`blushSwatchWrong`, `fondantFreeOn25cm`, `duplicateFillingAllowed`, `lastFlavorFreeInSecond`, `staleSecondFilling`). The clean version is `/level-2?mode=clean`, blocked in production like Level 1.
+- `src/data/levels/level2.js`: the five bugs with word groups, type explanations and lessons.
+- `src/data/levels/index.js`: a level registry (`LEVELS`). The matching unit test checks every registered level.
+- Unit test `tests/pricing/cakePricing.test.js`: the six hand-checked totals and each bug on its own. `npm run test:unit` now runs it too.
+- ADR 0006: one shared game panel, one visual identity per level.
+
+### Changed (Level 2: 1Up Bakery)
+- Game panel: the difficulty markers wrap onto a second line on narrow screens. Before, on phones the last markers were cut off and the panel scrolled sideways (both levels).
+- `tests/matching/matching.test.js` loops over every registered level instead of Level 1 only. Assertions are unchanged; test names now start with the level or bug id.
+- `tests/matching/phrases.js`: 7 should-match and 7 should-not-match phrases for each Level 2 bug; `matchNothing` and `ranking` are now grouped by level id.
+
 ### Added (test agents)
 - Two project subagents in `.claude/agents/`: `test-writer` (writes and maintains the Cypress tests) and `test-reviewer` (read-only review of the tests against a checklist; runs lint and the Cypress suite itself).
 - Cypress spec `cypress/e2e/level1-banner.cy.js`: checks that the Level 1 banner paints the navy blue `#0b1f4b` (`rgb(11, 31, 75)`, the middle stop of the banner gradient) in the buggy and clean versions. The banner is reached as the parent of `[data-cy=store-name]` for now; a `data-cy="banner"` on the header is planned in a follow-up branch.
