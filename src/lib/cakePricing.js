@@ -86,7 +86,18 @@ export function changeFillingCount(order, count, bugs) {
   if (count === 2) return { ...order, fillingCount: 2 };
 
   // The dropdown is reset to "Choose a filling" in BOTH versions, so the controls look right.
-  // BUG 5: the buggy version keeps charging what the second filling cost.
+  // BUG 5: the buggy version keeps charging what the second filling was CHARGED, i.e. the
+  // amount it added to the total just before the switch, worked out by the same
+  // secondFillingPrice() the total uses.
+  //
+  // Known interaction with BUG 4: with Bug 4 on, Pistachio Cream as the second filling is
+  // charged $0, so removing it leaves $0 behind and Bug 5 is invisible for that flavor.
+  // This is deliberate. If the stale amount ignored Bug 4 and used Pistachio's real $9,
+  // the total would go UP when going back to 1 filling ($34 to $43), a new and confusing
+  // symptom. Keeping "what it was charged" means the total simply does not go down.
+  //
+  // Repeated switches add up: each removal adds what that second filling was charged
+  // (Lemon Curd $6, then Chocolate Ganache $5: $11 stays in the total).
   const stale = bugs.staleSecondFilling
     ? (order.staleSecondCharge || 0) + secondFillingPrice(order.secondFilling, bugs)
     : 0;
