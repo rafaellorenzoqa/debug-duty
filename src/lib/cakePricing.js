@@ -20,7 +20,7 @@ export function getBugFlags(isClean) {
   return {
     blushSwatchWrong: bugged, // Bug 1 (Visual): the Blush Pink swatch is yellow
     fondantFreeOn25cm: bugged, // Bug 2 (Logic): Fondant adds $0 on the 25cm cake
-    duplicateFillingAllowed: bugged, // Bug 3 (Validation): the same flavor twice is accepted
+    duplicateFillingAllowed: bugged, // Bug 3 (Logic): the same flavor twice is accepted
     lastFlavorFreeInSecond: bugged, // Bug 4 (Edge case): Pistachio Cream as second filling is free
     staleSecondFilling: bugged, // Bug 5 (Behavior): a removed second filling stays in the total
   };

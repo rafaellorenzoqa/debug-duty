@@ -155,7 +155,7 @@ export const phrases = {
     ],
   },
 
-  "validation-duplicate-filling": {
+  "logic-duplicate-filling": {
     shouldMatch: [
       "i can pick the same filling twice",
       "both fillings can be vanilla cream",

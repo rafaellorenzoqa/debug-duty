@@ -56,10 +56,10 @@ export const level2 = {
         "When a price depends on two choices, test every combination. Here that is a small table: 2 cake types by 3 sizes, so 6 totals. Fondant was right on 15cm and 20cm, and one working combination proves nothing about the others. This is called pairwise or combination testing.",
     },
     {
-      id: "validation-duplicate-filling",
+      id: "logic-duplicate-filling",
       title: "The same filling can be chosen twice",
       difficulty: "medium", // orange
-      category: "Validation",
+      category: "Logic",
       points: 20,
       match: [
         // what it is about
@@ -72,7 +72,7 @@ export const level2 = {
         ],
       ],
       typeExplanation:
-        "The rule says two fillings must be different flavors, but the page accepts the same flavor in both dropdowns, shows no error and charges it twice. Checking what the user picked against a stated rule is Validation, and here that check is missing.",
+        "The rule says two fillings must be different flavors, but the page accepts the same flavor in both dropdowns, shows no error and charges it twice. Each dropdown on its own is fine; the rule that compares the two is missing. A rule that compares or combines values, and is missing or wrong, is a Logic bug.",
       lesson:
         "For any rule that involves two fields (two passwords, a start and end date, two fillings), try the same value in both. Then try values that break the rule in the other direction. A rule you never try to break is a rule you never tested.",
     },
