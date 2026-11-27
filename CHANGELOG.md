@@ -5,6 +5,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Fixed (Level 1 confirm-password phrasing)
+- Report matching: confirm-password reports that say the passwords are different now match, for example "The account is created even when password and confirm password are different". New words are tied to the password ("password are different", "differs from the password", "passwords are not identical"...). The bare words "different", "differs" and "not identical" stay out, because they also appear in praise ("the confirm button is different"). Four should-match and eight should-not-match phrases added to the fixture first.
+
 ### Added (half points rounding test)
 - Unit test `tests/game/game.test.js`: half points are rounded down (15 -> 7, 1 -> 0), in `halfPoints`, `checkReport` and `calculateScore`, using a made-up level with odd points (every real bug has even points, so the rounding was not tested anywhere). `npm run test:unit` runs it.
 
