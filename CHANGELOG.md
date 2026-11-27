@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Fixed (Level 2 polish)
+- Report matching: duplicate-filling reports that name a flavor followed by "for both" or "in both" now match (for example "i can choose vanilla for both fillings", "i can pick lemon curd in both"). Plain "for both" / "in both" were too broad, so the words are a flavor word plus the phrase. Three should-match and three should-not-match phrases added to the fixture first.
+- American spelling in the text players see: "color" and "flavor" on the 1Up Bakery page, the Blush Pink bug's title and explanation, and the Visual category definition (shown in both levels). Word lists and fixture phrases keep both spellings, so reports in either spelling still match.
+
+### Changed (Level 2 polish)
+- The interaction between Level 2 bugs 4 and 5 is now documented (comment on `changeFillingCount`, ADR 0006) and pinned by three unit tests: Bug 5 keeps what the second filling was charged, so a stale Pistachio Cream leaves $0 and repeated removals add up. No behaviour change.
+
 ### Added (half points rounding test)
 - Unit test `tests/game/game.test.js`: half points are rounded down (15 -> 7, 1 -> 0), in `halfPoints`, `checkReport` and `calculateScore`, using a made-up level with odd points (every real bug has even points, so the rounding was not tested anywhere). `npm run test:unit` runs it.
 
