@@ -125,6 +125,13 @@ export const level1 = {
           "not checked", "not check", "no check", "not the same", "isnt the same", "not equal",
           "different password", "different value", "different text", "another password",
           "ignor", "anything", "any value", "any text",
+          // "different", "differs" and "not identical" only when tied to the password: on their
+          // own they also appear in praise ("the confirm button is different", "the confirm
+          // password label differs on mobile").
+          "password are different", "passwords are different", "password is different",
+          "differs from the password", "differs from password", "differ from the password",
+          "differ from password", "passwords differ",
+          "passwords are not identical", "password is not identical", "not identical to the password",
         ],
       ],
       typeExplanation:

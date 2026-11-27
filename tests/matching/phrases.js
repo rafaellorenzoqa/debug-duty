@@ -78,6 +78,10 @@ export const phrases = {
       "confirm password mismatch is accepted",
       "confirm field ignores what i typed in password",
       "the confirm password check is not checked at all",
+      "the account is created even when password and confirm password are different",
+      "confirm password is different from password but the form is accepted",
+      "password and confirm password are different and signup still works",
+      "confirm password differs from the password and it is accepted",
     ],
     shouldNotMatch: [
       "the confirm password label is nice and the same size",
@@ -87,6 +91,15 @@ export const phrases = {
       "the confirm button is green",
       "the password label looks different on mobile",
       "email field accepts text with no at sign",
+      "the confirm password label looks different on mobile",
+      "the confirm password box and the password box are different sizes",
+      "the confirm password field is different from the password field in color",
+      "confirm password has a different color",
+      "the confirm button is different",
+      // "differs" and "not identical" are as broad as "different" when they are not tied to the password:
+      "the confirm password label differs on mobile",
+      "the confirm button color differs from the sign up button",
+      "the confirm and password boxes are not identical in size",
     ],
   },
 
