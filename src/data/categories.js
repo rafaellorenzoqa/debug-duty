@@ -12,7 +12,7 @@ export const CATEGORIES = ["Visual", "Validation", "Edge case", "Logic", "Behavi
 export const CATEGORY_INFO = {
   Visual: {
     definition:
-      "Something looks or reads wrong on screen, but the feature itself still works: typos, misaligned or overlapping elements, wrong colours, cut-off text, broken images.",
+      "Something looks or reads wrong on screen, but the feature itself still works: typos, misaligned or overlapping elements, wrong colors, cut-off text, broken images.",
     askYourself: "Does it look or read wrong, even though it does its job?",
     example: "On a phone, a product photo covers the price, so you cannot read it.",
     tellApart:
