@@ -44,7 +44,9 @@ npm run test:e2e:guard  # starts the app WITHOUT the clean-mode flag; checks the
 npm run cy:open     # interactive Cypress runner (start the app with `npm run dev` first)
 npm run lint        # ESLint
 ```
-- `cypress/e2e/level1-bugs.cy.js`: for each bug, one test proves it is present in the buggy page and one proves it is absent in the clean page.
+- `cypress/e2e/level1-bugs.cy.js` and `level2-bugs.cy.js`: for each bug, one test proves it is present in the buggy page and one proves it is absent in the clean page.
+- `cypress/e2e/level2-bakery.cy.js`: Level 2's prices and rules in the clean version (every size, cake type, flavor in both dropdowns, colour and swatch, the six hand-checked totals). Expected totals are typed in by hand, never read from the app's code.
+- `cypress/e2e/level2-game-flow.cy.js`: reporting Level 2's bugs through the game panel, its results screen, and the links between levels.
 - `tests/matching/`: phrases that must and must not match each bug of every level, run against the real matching code with Node's built-in test runner. Add a phrase there whenever a report is judged wrongly.
 - `tests/pricing/`: Level 2's hand-checked cake totals and each bug on its own, against the real pricing code.
 - `cypress/e2e/game-flow.cy.js`: start screen, markers and counter, correct / half-points / duplicate / wrong reports, results screen.

@@ -5,6 +5,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Added (Level 2 Cypress tests)
+- Written by the `test-writer` agent and reviewed twice by the `test-reviewer` agent.
+- `cypress/e2e/level2-bugs.cy.js`: a present (buggy) and absent (clean) test for each of the five Level 2 bugs.
+- `cypress/e2e/level2-bakery.cy.js`: clean-version prices and rules: the default and six hand-checked totals, every size x cake type, every flavor in each dropdown, every colour and swatch, the dropdown option lists, the second dropdown's enable/disable/reset, the duplicate error and the em dash total; the price list in both versions.
+- `cypress/e2e/level2-game-flow.cy.js`: reports through the game panel (markers in order, counter, score, half points, duplicates, vague reports), the results screen of the last level (no Next level), Play again, the start-level-2 card and Level 1's Next level button.
+- Guard test: `/level-2?mode=clean` serves the buggy page when `ENABLE_CLEAN_MODE` is off.
+- Commands `visitLevel2(mode)` and `buildCake(overrides)`; `buildCake` asserts every value stuck, so a select that silently failed cannot pass.
+- Mutation check: flipping each Level 2 bug flag on its own fails exactly that bug's tests and nothing else.
+
 ### Added (level navigation)
 - Start screen: a "More levels" card for every level after the first (`data-cy="start-level-2"` for 1Up Bakery), with its summary and difficulty mix. The briefing and the Start button are unchanged. All levels are open, nothing is locked.
 - Results screen: a **Next level: 1Up Bakery** button (`data-cy="next-level"`) when the finished level has a next one. Play again and Back to start stay; when Next level is shown, Play again becomes an outlined button so there is one main action.
