@@ -5,6 +5,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/); commits follow 
 
 ## [Unreleased]
 
+### Fixed (review follow-ups)
+- Report matching: a flavor followed by "for both" no longer matches the duplicate-filling bug on its own, because prices are described that way ("vanilla cream for both sizes costs $4"). It now needs "for both fillings" or "for both dropdowns". "<flavor> in both" is unchanged (known limit: it also matches "lemon curd in both sizes costs $6"). Three should-not-match and one should-match phrase added to the fixture first.
+- American spelling: "behavior" in the Edge case category's "tell it apart" text (shown in both levels).
+
 ### Fixed (Level 2 polish)
 - Report matching: duplicate-filling reports that name a flavor followed by "for both" or "in both" now match (for example "i can choose vanilla for both fillings", "i can pick lemon curd in both"). Plain "for both" / "in both" were too broad, so the words are a flavor word plus the phrase. Three should-match and three should-not-match phrases added to the fixture first.
 - American spelling in the text players see: "color" and "flavor" on the 1Up Bakery page, the Blush Pink bug's title and explanation, and the Visual category definition (shown in both levels). Word lists and fixture phrases keep both spellings, so reports in either spelling still match.

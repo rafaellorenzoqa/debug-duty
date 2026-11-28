@@ -73,16 +73,30 @@ export const level2 = {
           "same filling", "same flavo", "same one", "twice", "duplicate", "two of the same", "identical",
           "both the same", "are the same", "can be the same", "both fillings can be", "both can be",
           "dont have to be different", "doesnt have to be different", "not have to be different",
-          // A flavor named right before "for both" / "in both" ("vanilla for both fillings",
-          // "lemon curd in both"). Plain "for both" or "in both" is too broad: it also matches
-          // praise such as "the filling in both dropdowns looks nice". One word of each flavor
-          // name, so short and full names both work ("lemon in both", "lemon curd in both").
-          "vanilla for both", "vanilla in both", "cream for both", "cream in both",
-          "chocolate for both", "chocolate in both", "ganache for both", "ganache in both",
-          "strawberry for both", "strawberry in both", "jam for both", "jam in both",
-          "lemon for both", "lemon in both", "curd for both", "curd in both",
-          "dulce for both", "dulce in both", "leche for both", "leche in both",
-          "pistachio for both", "pistachio in both",
+          // A flavor named right before "in both" ("lemon curd in both"), or before "for both
+          // fillings" / "for both dropdowns" ("vanilla for both fillings"). Plain "for both" or
+          // "in both" is too broad: it also matches praise such as "the filling in both dropdowns
+          // looks nice". A flavor plus "for both" is still too broad, because prices are
+          // described that way ("vanilla cream for both sizes costs $4"), so "for both" needs
+          // the word after it as well. One word of each flavor name, so short and full names
+          // both work ("lemon in both", "lemon curd in both").
+          // Known limit: "<flavor> in both" also matches "lemon curd in both sizes costs $6".
+          // It cannot be narrowed the same way without losing "i can pick lemon curd in both",
+          // which ends right after "in both".
+          "vanilla in both", "cream in both", "chocolate in both", "ganache in both",
+          "strawberry in both", "jam in both", "lemon in both", "curd in both",
+          "dulce in both", "leche in both", "pistachio in both",
+          "vanilla for both fillings", "vanilla for both dropdowns",
+          "cream for both fillings", "cream for both dropdowns",
+          "chocolate for both fillings", "chocolate for both dropdowns",
+          "ganache for both fillings", "ganache for both dropdowns",
+          "strawberry for both fillings", "strawberry for both dropdowns",
+          "jam for both fillings", "jam for both dropdowns",
+          "lemon for both fillings", "lemon for both dropdowns",
+          "curd for both fillings", "curd for both dropdowns",
+          "dulce for both fillings", "dulce for both dropdowns",
+          "leche for both fillings", "leche for both dropdowns",
+          "pistachio for both fillings", "pistachio for both dropdowns",
         ],
       ],
       typeExplanation:

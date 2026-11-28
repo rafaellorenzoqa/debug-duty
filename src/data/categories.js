@@ -32,7 +32,7 @@ export const CATEGORY_INFO = {
     askYourself: "Does it work for typical values but break for one unusual or extreme one?",
     example: "A comment box works up to 499 characters and crashes at exactly 500, the stated limit.",
     tellApart:
-      "Edge cases hide behind working behaviour: most values are fine, one special value is not. If it fails for ordinary input too, it is more likely Validation or Logic.",
+      "Edge cases hide behind working behavior: most values are fine, one special value is not. If it fails for ordinary input too, it is more likely Validation or Logic.",
   },
   Logic: {
     definition:
